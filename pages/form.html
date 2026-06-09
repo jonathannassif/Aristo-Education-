@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration — Aristo</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --navy-900: #0d142b;
+        --white: #ffffff;
+        --cyan-500: #009ecf;
+        --cyan-200: #97e7f5;
+        --green-600: #46b000;
+        --orange: #ff7f00;
+        --red: #e53935;
+        --max-width: 1200px;
+      }
+
+      @font-face {
+        font-family: "Punoer";
+        src: url("../fonts/Punoer.otf") format("opentype");
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      body {
+        font-family: Punoer, sans-serif;
+        background: var(--navy-900);
+        color: var(--white);
+        line-height: 1.5;
+      }
+
+      .wrap {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* ── HEADER ── */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(5, 20, 52, 0.98);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 20px;
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+      .logo-link {
+        display: inline-block;
+        transition: transform 0.3s;
+      }
+      .logo-link:hover {
+        transform: scale(1.05);
+      }
+      .brand-logo {
+        height: 55px;
+        display: block;
+      }
+
+      .nav {
+        display: flex;
+        gap: 40px;
+      }
+      .nav a {
+        color: #d7e5f2;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 8px 0;
+        position: relative;
+        transition: color 0.3s;
+      }
+      .nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--cyan-500);
+        transition: width 0.3s;
+      }
+      .nav a:hover {
+        color: var(--cyan-500);
+      }
+      .nav a:hover::after {
+        width: 100%;
+      }
+
+      .mobile-toggle {
+        display: none;
+        flex-direction: column;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        gap: 5px;
+      }
+      .bar {
+        width: 28px;
+        height: 3px;
+        background: white;
+        border-radius: 3px;
+        transition: all 0.4s;
+      }
+      .mobile-toggle:hover .bar {
+        background: var(--cyan-500);
+      }
+
+      .mobile-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(5, 20, 52, 0.99);
+        backdrop-filter: blur(15px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        transform: translateY(-100%);
+        transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      .mobile-panel.open {
+        transform: translateY(0);
+      }
+      .mobile-close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        font-size: 3rem;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s;
+      }
+      .mobile-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: rotate(90deg);
+      }
+      .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+      }
+      .mobile-link {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+      .mobile-panel.open .mobile-link {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .mobile-panel.open .mobile-link:nth-child(1) {
+        transition-delay: 0.1s;
+      }
+      .mobile-panel.open .mobile-link:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+      .mobile-panel.open .mobile-link:nth-child(3) {
+        transition-delay: 0.3s;
+      }
+      .mobile-panel.open .mobile-link:nth-child(4) {
+        transition-delay: 0.4s;
+      }
+      .mobile-panel.open .mobile-link:nth-child(5) {
+        transition-delay: 0.5s;
+      }
+      .mobile-panel.open .mobile-link:nth-child(6) {
+        transition-delay: 0.6s;
+      }
+      .mobile-panel.open .mobile-link:nth-child(7) {
+        transition-delay: 0.7s;
+      }
+      .mobile-link:hover {
+        color: var(--cyan-500);
+      }
+
+      /* ── CERTIFICATE HERO ── */
+      .cert-hero {
+        padding-top: 105px; /* header height offset */
+        background: linear-gradient(180deg, #0d142b 0%, #1a0f3a 100%);
+      }
+      .cert-hero-inner {
+        max-width: 580px;
+        margin: 0 auto;
+        padding: 36px 20px 0;
+      }
+
+      /* Certificate image */
+      .cert-image-wrap {
+        width: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .cert-image-wrap img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      /* Placeholder shown when no real image */
+      .cert-placeholder {
+        width: 100%;
+        aspect-ratio: 16/7;
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px dashed rgba(70, 176, 0, 0.3);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        color: rgba(255, 255, 255, 0.25);
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .cert-placeholder i {
+        font-size: 3rem;
+        color: rgba(70, 176, 0, 0.2);
+      }
+
+      /* ── SPONSOR LOGOS BAR ── */
+      .sponsors-bar {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 28px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .sponsor-slot {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 20px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 14px;
+        min-height: 80px;
+        transition: border-color 0.3s;
+      }
+      .sponsor-slot:hover {
+        border-color: rgba(0, 158, 207, 0.3);
+      }
+
+      .sponsor-slot img {
+        max-width: 100%;
+        max-height: 56px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      /* Placeholder slot (no image yet) */
+      .sponsor-slot.empty {
+        border-style: dashed;
+        border-color: rgba(255, 255, 255, 0.15);
+        flex-direction: column;
+        gap: 6px;
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: default;
+      }
+      .sponsor-slot.empty i {
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.15);
+      }
+
+      .sponsors-divider {
+        width: 1px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
+      }
+
+      /* ── COUNTER BANNER ── */
+      .counter-banner {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 158, 207, 0.15),
+          rgba(70, 176, 0, 0.15)
+        );
+        border-top: 1px solid rgba(0, 158, 207, 0.15);
+        border-bottom: 1px solid rgba(0, 158, 207, 0.2);
+        padding: 14px 20px;
+        text-align: center;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .counter-banner strong {
+        color: var(--cyan-500);
+        font-size: 1.15rem;
+      }
+      .counter-bar-wrap {
+        max-width: 400px;
+        margin: 8px auto 0;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .counter-bar {
+        height: 100%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--cyan-500), var(--green-600));
+        transition: width 0.5s ease;
+      }
+
+      /* ── FORM SECTION ── */
+      .form-section {
+        padding: 60px 0 100px;
+        background: linear-gradient(
+          180deg,
+          #1a0f3a 0%,
+          #1e1248 40%,
+          var(--navy-900) 100%
+        );
+      }
+      .form-wrapper {
+        max-width: 580px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* ── FORM CARD ── */
+      .form-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 42px 40px;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(12px);
+      }
+
+      .card-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .card-header h2 {
+        font-family: Punoer, sans-serif;
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: var(--white);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 8px;
+      }
+      .card-header h2 span {
+        color: var(--green-600);
+      }
+      .card-header p {
+        font-family: Punoer, sans-serif;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.03em;
+        line-height: 1.6;
+      }
+      .card-divider {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cyan-500), var(--green-600));
+        border-radius: 10px;
+        margin: 14px auto 0;
+      }
+
+      /* ── FORM GROUPS ── */
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        font-family: Punoer, sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--cyan-200);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+      label .req {
+        color: #ff6b6b;
+        margin-left: 3px;
+      }
+
+      .input-wrap {
+        position: relative;
+      }
+      .input-wrap i {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 1rem;
+        pointer-events: none;
+      }
+
+      input {
+        width: 100%;
+        padding: 13px 18px 13px 46px;
+        border: 2px solid rgba(0, 158, 207, 0.25);
+        border-radius: 12px;
+        background: rgba(13, 20, 43, 0.7);
+        color: var(--white);
+        font-family: Punoer, sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+      }
+      input:focus {
+        outline: none;
+        border-color: var(--cyan-500);
+        background: rgba(13, 20, 43, 0.9);
+        box-shadow: 0 0 0 4px rgba(0, 158, 207, 0.12);
+      }
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+        font-family: Punoer, sans-serif;
+      }
+      input.error {
+        border-color: var(--red);
+      }
+
+      .field-error {
+        font-family: Punoer, sans-serif;
+        font-size: 0.82rem;
+        color: #ff6b6b;
+        margin-top: 6px;
+        display: none;
+      }
+      .field-error.show {
+        display: block;
+      }
+
+      /* ── SUBMIT BUTTON ── */
+      .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--green-600);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-family: Punoer, sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 8px 25px rgba(70, 176, 0, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .submit-btn:hover {
+        background: #5acc00;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(70, 176, 0, 0.5);
+      }
+      .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* ── FULL STATE ── */
+      .full-screen {
+        display: none;
+        text-align: center;
+        padding: 20px 0;
+        animation: fadeInUp 0.5s ease-out;
+      }
+      .full-screen.show {
+        display: block;
+      }
+      .full-screen i {
+        font-size: 4.5rem;
+        color: var(--orange);
+        display: block;
+        margin-bottom: 20px;
+      }
+      .full-screen h2 {
+        font-family: Punoer, sans-serif;
+        font-size: 2rem;
+        color: var(--orange);
+        margin-bottom: 14px;
+      }
+      .full-screen p {
+        font-family: Punoer, sans-serif;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        max-width: 420px;
+        margin: 0 auto 28px;
+      }
+
+      /* ── SUCCESS STATE ── */
+      .success-screen {
+        display: none;
+        text-align: center;
+        padding: 20px 0;
+        animation: fadeInUp 0.5s ease-out;
+      }
+      .success-screen.show {
+        display: block;
+      }
+      .success-screen i.check {
+        font-size: 4.5rem;
+        color: var(--green-600);
+        display: block;
+        margin-bottom: 20px;
+      }
+      .success-screen h2 {
+        font-family: Punoer, sans-serif;
+        font-size: 2rem;
+        color: var(--green-600);
+        margin-bottom: 14px;
+      }
+      .success-screen p {
+        font-family: Punoer, sans-serif;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        max-width: 420px;
+        margin: 0 auto 28px;
+      }
+
+      .back-btn {
+        display: inline-block;
+        padding: 14px 40px;
+        background: var(--cyan-500);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-family: Punoer, sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all 0.3s;
+        text-transform: uppercase;
+      }
+      .back-btn:hover {
+        background: var(--cyan-200);
+        color: var(--navy-900);
+        transform: translateY(-2px);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── FOOTER ── */
+      .site-footer {
+        padding: 40px 0;
+        background: #081022;
+        border-top: 2px solid rgba(0, 158, 207, 0.2);
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .footer-logo {
+        height: 40px;
+        transition: transform 0.3s;
+      }
+      .footer-logo:hover {
+        transform: scale(1.05);
+      }
+      .social {
+        display: flex;
+        gap: 15px;
+      }
+      .social a {
+        color: var(--cyan-500);
+        text-decoration: none;
+        font-size: 1.5rem;
+        transition: all 0.3s;
+      }
+      .social a:hover {
+        color: var(--cyan-200);
+        transform: translateY(-3px);
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 992px) {
+        .nav {
+          display: none;
+        }
+        .mobile-toggle {
+          display: flex;
+        }
+        .brand-logo {
+          height: 50px;
+        }
+        .header-inner {
+          padding: 20px;
+        }
+      }
+      @media (max-width: 600px) {
+        .form-card {
+          padding: 28px 18px;
+        }
+        .sponsors-bar {
+          padding: 20px 16px;
+          gap: 12px;
+        }
+        .sponsor-slot {
+          padding: 12px 14px;
+          min-height: 66px;
+        }
+        .sponsor-slot img {
+          max-height: 44px;
+        }
+      }
+      @media (max-width: 480px) {
+        .mobile-link {
+          font-size: 1.7rem;
+        }
+        .brand-logo {
+          height: 45px;
+        }
+        .cert-hero-inner {
+          padding-top: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a href="../index.html#home" class="logo-link" aria-label="Aristo Home">
+          <img
+            src="../images/logos/HorizontalInv.png"
+            alt="Aristo Logo"
+            class="brand-logo"
+          />
+        </a>
+        <nav class="nav">
+          <a href="../index.html#home">Home</a>
+          <a href="../index.html#who-we-are">Our Vision</a>
+          <a href="../index.html#mission">Mission</a>
+          <a href="../index.html#why-choose">Why Us</a>
+          <a href="../index.html#products">Products</a>
+          <a href="./form.html">Form</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+        <button class="mobile-toggle" aria-label="Open menu">
+          <span class="bar"></span><span class="bar"></span
+          ><span class="bar"></span>
+        </button>
+      </div>
+      <div class="mobile-panel" id="mobileMenu">
+        <button class="mobile-close" aria-label="Close menu">×</button>
+        <nav class="mobile-nav">
+          <a href="../index.html#home" class="mobile-link">Home</a>
+          <a href="../index.html#who-we-are" class="mobile-link">Our Vision</a>
+          <a href="../index.html#mission" class="mobile-link">Mission</a>
+          <a href="../index.html#why-choose" class="mobile-link">Why Us</a>
+          <a href="../index.html#products" class="mobile-link">Products</a>
+          <a href="./form.html" class="mobile-link">Form</a>
+          <a href="./contact.html" class="mobile-link">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ── CERTIFICATE HERO ── -->
+    <div class="cert-hero">
+      <div class="cert-hero-inner">
+        <!-- Certificate image — replace src when ready -->
+        <div class="cert-image-wrap">
+          <img
+            src="../images/STEMcertificate.png"
+            alt="STEM Pathways Certificate"
+            onerror="
+              this.parentElement.innerHTML =
+                '<div class=\'cert-placeholder\'><i class=\'fas fa-certificate\'></i><span>Certificate Image</span></div>'
+            "
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- COUNTER BANNER -->
+    <div class="counter-banner">
+      <div><strong id="spotsLeft">250</strong> spots remaining out of 250</div>
+      <div class="counter-bar-wrap">
+        <div class="counter-bar" id="counterBar" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- FORM SECTION -->
+    <section class="form-section">
+      <div class="form-wrapper">
+        <div class="form-card">
+          <!-- ── FORM ── -->
+          <div id="formContent">
+            <div class="card-header">
+              <h2>Register <span>Now</span></h2>
+              <p>
+                Fill in your details below to secure your place in the program
+              </p>
+              <div class="card-divider"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Full Name <span class="req">*</span></label>
+              <div class="input-wrap">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <p class="field-error" id="err-name">
+                Please enter your full name.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number <span class="req">*</span></label>
+              <div class="input-wrap">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="phone" placeholder="+20 1XX XXX XXXX" />
+              </div>
+              <p class="field-error" id="err-phone">
+                Please enter a valid phone number.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="email"
+                >Email Address <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fas fa-envelope"></i>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="example@email.com"
+                />
+              </div>
+              <p class="field-error" id="err-email">
+                Please enter a valid email address.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="nationalId"
+                >National ID <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fas fa-id-card"></i>
+                <input
+                  type="text"
+                  id="nationalId"
+                  placeholder="14-digit national ID"
+                  maxlength="14"
+                />
+              </div>
+              <p class="field-error" id="err-nationalId">
+                Please enter a valid 14-digit national ID.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="title">Title <span class="req">*</span></label>
+              <div class="input-wrap">
+                <i class="fas fa-briefcase"></i>
+                <input
+                  type="text"
+                  id="title"
+                  placeholder="e.g. Student, Teacher, School Administrator"
+                />
+              </div>
+              <p class="field-error" id="err-title">Please enter your title.</p>
+            </div>
+
+            <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+              <i class="fas fa-paper-plane"></i> Submit Registration
+            </button>
+
+            <!-- ── LOGOS BELOW FORM ── -->
+            <div class="sponsors-bar">
+              <div class="sponsor-slot">
+                <img
+                  src="../images/formLogo.png"
+                  alt="Sponsor Logo"
+                  onerror="
+                    this.parentElement.classList.add('empty');
+                    this.parentElement.innerHTML =
+                      '<i class=\'fas fa-image\'></i><span>Logo 1</span>';
+                  "
+                />
+              </div>
+              <div class="sponsors-divider"></div>
+              <!-- Replace div below with <img src="../images/sponsor2.png"> when ready -->
+              <div class="sponsor-slot empty">
+                <i class="fas fa-image"></i>
+                <span>Logo 2</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── FULL STATE ── -->
+          <div class="full-screen" id="fullScreen">
+            <i class="fas fa-lock"></i>
+            <h2>Registration Closed</h2>
+            <p>
+              We have reached our maximum capacity of
+              <strong>250 participants</strong>. Registration is now closed.
+              Please contact us for more information.
+            </p>
+            <a href="./contact.html" class="back-btn"
+              ><i class="fas fa-envelope" style="margin-right: 8px"></i> Contact
+              Us</a
+            >
+          </div>
+
+          <!-- ── SUCCESS STATE ── -->
+          <div class="success-screen" id="successScreen">
+            <i class="fas fa-check-circle check"></i>
+            <h2>Registration Successful!</h2>
+            <p>
+              Thank you! Your registration has been received. Our team will
+              contact you soon.
+            </p>
+            <a href="../index.html" class="back-btn"
+              ><i class="fas fa-home" style="margin-right: 8px"></i> Back to
+              Home</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <img
+          src="../images/logos/CompactInv.png"
+          alt="Aristo Logo"
+          class="footer-logo"
+          loading="lazy"
+        />
+        <p>Copyright © 2025 All Rights Reserved Aristo Tech</p>
+        <div class="social">
+          <a
+            href="https://www.facebook.com/Aristo.Academy1/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/aristoeg_?igsh=dzlnbTJqM3dscGho"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/company/aristo-edtech/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const MAX = 250;
+      const STORAGE_KEY = "aristo_registrations";
+
+      function getRegistrations() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      }
+      function saveRegistrations(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function updateCounter() {
+        const count = getRegistrations().length;
+        const left = Math.max(MAX - count, 0);
+        const pct = (count / MAX) * 100;
+        document.getElementById("spotsLeft").textContent = left;
+        document.getElementById("counterBar").style.width = pct + "%";
+        const bar = document.getElementById("counterBar");
+        if (pct >= 90)
+          bar.style.background = "linear-gradient(90deg,#e53935,#ff6b6b)";
+        else if (pct >= 60)
+          bar.style.background = "linear-gradient(90deg,#f59e0b,#ff7f00)";
+      }
+
+      function checkCapacity() {
+        if (getRegistrations().length >= MAX) {
+          document.getElementById("formContent").style.display = "none";
+          document.getElementById("fullScreen").classList.add("show");
+        }
+      }
+
+      function clearErrors() {
+        document
+          .querySelectorAll(".field-error")
+          .forEach((e) => e.classList.remove("show"));
+        document
+          .querySelectorAll("input")
+          .forEach((e) => e.classList.remove("error"));
+      }
+      function showError(errId, inputId) {
+        document.getElementById(errId).classList.add("show");
+        document.getElementById(inputId).classList.add("error");
+      }
+
+      function validate() {
+        clearErrors();
+        let ok = true;
+        const name = document.getElementById("name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const nationalId = document.getElementById("nationalId").value.trim();
+        const title = document.getElementById("title").value.trim();
+
+        if (!name) {
+          showError("err-name", "name");
+          ok = false;
+        }
+        if (!phone || phone.length < 8) {
+          showError("err-phone", "phone");
+          ok = false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showError("err-email", "email");
+          ok = false;
+        }
+        if (!/^\d{14}$/.test(nationalId)) {
+          showError("err-nationalId", "nationalId");
+          ok = false;
+        }
+        if (!title) {
+          showError("err-title", "title");
+          ok = false;
+        }
+        return ok;
+      }
+
+      function submitForm() {
+        if (!validate()) return;
+        const registrations = getRegistrations();
+        if (registrations.length >= MAX) {
+          checkCapacity();
+          return;
+        }
+
+        const record = {
+          id: registrations.length + 1,
+          name: document.getElementById("name").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          nationalId: document.getElementById("nationalId").value.trim(),
+          title: document.getElementById("title").value.trim(),
+          date: new Date().toLocaleString("en-GB"),
+        };
+
+        registrations.push(record);
+        saveRegistrations(registrations);
+        updateCounter();
+
+        document.getElementById("formContent").style.display = "none";
+        document
+          .getElementById(
+            registrations.length >= MAX ? "fullScreen" : "successScreen",
+          )
+          .classList.add("show");
+
+        window.scrollTo({
+          top: document.querySelector(".form-section").offsetTop - 100,
+          behavior: "smooth",
+        });
+      }
+
+      // Mobile menu
+      const openBtn = document.querySelector(".mobile-toggle");
+      const panel = document.querySelector(".mobile-panel");
+      const closeBtn = document.querySelector(".mobile-close");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      openBtn.addEventListener("click", () => {
+        panel.classList.add("open");
+        document.body.style.overflow = "hidden";
+      });
+      closeBtn.addEventListener("click", () => {
+        panel.classList.remove("open");
+        document.body.style.overflow = "";
+      });
+      mobileLinks.forEach((l) =>
+        l.addEventListener("click", () => {
+          panel.classList.remove("open");
+          document.body.style.overflow = "";
+        }),
+      );
+
+      updateCounter();
+      checkCapacity();
+    </script>
+  </body>
+</html>
