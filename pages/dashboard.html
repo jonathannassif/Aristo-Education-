@@ -8,7 +8,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
-    <!-- SheetJS for Excel export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
       * {
@@ -207,11 +206,16 @@
       .page-title span {
         color: var(--cyan-500);
       }
+      .last-updated {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
 
       .topbar-right {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
+        flex-wrap: wrap;
       }
       .search-bar {
         display: flex;
@@ -229,7 +233,7 @@
         color: var(--white);
         font-family: Punoer, sans-serif;
         font-size: 0.9rem;
-        width: 220px;
+        width: 200px;
       }
       .search-bar input::placeholder {
         color: var(--text-muted);
@@ -238,12 +242,30 @@
         color: var(--text-muted);
       }
 
-      /* ── EXPORT BUTTON ── */
+      .icon-btn {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+      .icon-btn:hover {
+        color: var(--white);
+        border-color: var(--cyan-500);
+      }
+
       .export-btn {
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 22px;
+        padding: 10px 18px;
         background: linear-gradient(135deg, #1d6f42, #2e8b57);
         color: white;
         border: none;
@@ -259,8 +281,25 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(29, 111, 66, 0.5);
       }
-      .export-btn i {
-        font-size: 1rem;
+
+      .danger-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: rgba(229, 57, 53, 0.12);
+        color: var(--red);
+        border: 1px solid rgba(229, 57, 53, 0.3);
+        border-radius: 10px;
+        font-family: Punoer, sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .danger-btn:hover {
+        background: rgba(229, 57, 53, 0.22);
+        border-color: var(--red);
       }
 
       /* ── CONTENT ── */
@@ -330,8 +369,6 @@
         font-size: 0.85rem;
         color: var(--text-muted);
       }
-
-      /* capacity bar inside stat card */
       .capacity-bar-wrap {
         margin-top: 10px;
         height: 5px;
@@ -344,6 +381,38 @@
         border-radius: 10px;
         background: linear-gradient(90deg, var(--cyan-500), var(--green-600));
         transition: width 0.5s;
+      }
+
+      /* ── TITLE BREAKDOWN ── */
+      .breakdown-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .breakdown-item {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .breakdown-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .breakdown-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .breakdown-count {
+        font-size: 1.4rem;
+        font-weight: 900;
+        margin-left: auto;
       }
 
       /* ── PANEL ── */
@@ -368,7 +437,6 @@
         font-weight: 700;
       }
 
-      /* ── SEARCH IN TABLE ── */
       .table-search {
         display: flex;
         align-items: center;
@@ -404,8 +472,8 @@
       }
       th {
         text-align: left;
-        padding: 14px 20px;
-        font-size: 0.75rem;
+        padding: 14px 16px;
+        font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         color: var(--text-muted);
@@ -423,12 +491,58 @@
         border-bottom: none;
       }
       td {
-        padding: 14px 20px;
-        font-size: 0.9rem;
+        padding: 13px 16px;
+        font-size: 0.88rem;
         color: var(--text-dim);
       }
       td strong {
         color: var(--white);
+      }
+
+      /* title badge */
+      .title-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .title-badge.student {
+        background: rgba(0, 158, 207, 0.15);
+        color: var(--cyan-500);
+      }
+      .title-badge.teacher {
+        background: rgba(70, 176, 0, 0.15);
+        color: var(--green-light);
+      }
+      .title-badge.parent {
+        background: rgba(255, 127, 0, 0.15);
+        color: var(--orange);
+      }
+      .title-badge.admin {
+        background: rgba(107, 45, 145, 0.15);
+        color: #b06ee0;
+      }
+      .title-badge.other {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-dim);
+      }
+
+      /* delete row button */
+      .del-btn {
+        background: none;
+        border: none;
+        color: rgba(229, 57, 53, 0.4);
+        cursor: pointer;
+        font-size: 0.95rem;
+        padding: 4px 8px;
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+      .del-btn:hover {
+        color: var(--red);
+        background: rgba(229, 57, 53, 0.1);
       }
 
       .empty-state {
@@ -446,7 +560,6 @@
         font-size: 0.95rem;
       }
 
-      /* pagination */
       .pagination {
         display: flex;
         align-items: center;
@@ -489,9 +602,100 @@
         cursor: not-allowed;
       }
 
+      /* ── CONFIRM MODAL ── */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-overlay.show {
+        display: flex;
+      }
+      .modal {
+        background: #111827;
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 36px 32px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        animation: fadeInUp 0.3s ease-out;
+      }
+      .modal i {
+        font-size: 3rem;
+        color: var(--red);
+        display: block;
+        margin-bottom: 16px;
+      }
+      .modal h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      .modal p {
+        font-size: 0.9rem;
+        color: var(--text-dim);
+        margin-bottom: 28px;
+        line-height: 1.6;
+      }
+      .modal-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+      .modal-cancel {
+        padding: 12px 28px;
+        border-radius: 50px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        font-family: Punoer, sans-serif;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .modal-cancel:hover {
+        border-color: var(--cyan-500);
+        color: var(--white);
+      }
+      .modal-confirm {
+        padding: 12px 28px;
+        border-radius: 50px;
+        background: var(--red);
+        border: none;
+        color: white;
+        font-family: Punoer, sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .modal-confirm:hover {
+        background: #c62828;
+        transform: translateY(-1px);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       /* ── RESPONSIVE ── */
       @media (max-width: 1200px) {
         .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .breakdown-grid {
           grid-template-columns: repeat(2, 1fr);
         }
       }
@@ -518,9 +722,15 @@
           grid-template-columns: repeat(2, 1fr);
           gap: 14px;
         }
+        .breakdown-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
       @media (max-width: 480px) {
         .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .breakdown-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -543,6 +753,9 @@
         <p class="nav-section-label" style="margin-top: 10px">System</p>
         <a class="nav-item" href="../index.html"
           ><i class="fas fa-globe"></i> View Website</a
+        >
+        <a class="nav-item" href="./form.html"
+          ><i class="fas fa-wpforms"></i> View Form</a
         >
         <a class="nav-item"><i class="fas fa-cog"></i> Settings</a>
       </nav>
@@ -572,7 +785,10 @@
           >
             <i class="fas fa-bars"></i>
           </button>
-          <div class="page-title">Registrations <span>Dashboard</span></div>
+          <div>
+            <div class="page-title">Registrations <span>Dashboard</span></div>
+            <div class="last-updated" id="lastUpdated">Last updated: —</div>
+          </div>
         </div>
         <div class="topbar-right">
           <div class="search-bar">
@@ -584,8 +800,15 @@
               oninput="renderTable()"
             />
           </div>
+          <!-- Manual refresh -->
+          <button class="icon-btn" onclick="refreshAll()" title="Refresh data">
+            <i class="fas fa-sync-alt" id="refreshIcon"></i>
+          </button>
           <button class="export-btn" onclick="exportExcel()">
             <i class="fas fa-file-excel"></i> Export Excel
+          </button>
+          <button class="danger-btn" onclick="openClearModal()">
+            <i class="fas fa-trash-alt"></i> Clear All
           </button>
         </div>
       </div>
@@ -630,6 +853,9 @@
           </div>
         </div>
 
+        <!-- TITLE BREAKDOWN -->
+        <div class="breakdown-grid" id="breakdownGrid"></div>
+
         <!-- TABLE PANEL -->
         <div class="panel">
           <div class="panel-header">
@@ -647,14 +873,14 @@
                 <input
                   type="text"
                   id="tableSearch"
-                  placeholder="Filter by name, ID, email..."
+                  placeholder="Filter by name, ID, email, title..."
                   oninput="renderTable()"
                 />
               </div>
               <button
                 class="export-btn"
                 onclick="exportExcel()"
-                style="padding: 8px 16px; font-size: 0.82rem"
+                style="padding: 8px 14px; font-size: 0.82rem"
               >
                 <i class="fas fa-file-excel"></i> Export
               </button>
@@ -667,10 +893,12 @@
                 <tr>
                   <th>#</th>
                   <th>Full Name</th>
+                  <th>Title</th>
                   <th>National ID</th>
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Date Registered</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="tableBody"></tbody>
@@ -692,23 +920,62 @@
       </div>
     </div>
 
-    <script>
-      // ── NOTE ──────────────────────────────────────────────────────────────
-      // Reads data from localStorage (same source as form.html).
-      // In Phase 2 this will read from Supabase so data is shared across all
-      // devices and the dashboard is protected by real authentication.
-      // ─────────────────────────────────────────────────────────────────────
+    <!-- CONFIRM MODAL (clear all) -->
+    <div class="modal-overlay" id="clearModal">
+      <div class="modal">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Clear All Registrations?</h3>
+        <p>
+          This will permanently delete all
+          <strong id="modalCount">0</strong> registrations. This action cannot
+          be undone.
+        </p>
+        <div class="modal-btns">
+          <button class="modal-cancel" onclick="closeClearModal()">
+            Cancel
+          </button>
+          <button class="modal-confirm" onclick="clearAll()">
+            Yes, Delete All
+          </button>
+        </div>
+      </div>
+    </div>
 
+    <!-- CONFIRM MODAL (single delete) -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="modal">
+        <i class="fas fa-user-times"></i>
+        <h3>Delete Registration?</h3>
+        <p>
+          Remove <strong id="deleteModalName"></strong> from the list? This
+          cannot be undone.
+        </p>
+        <div class="modal-btns">
+          <button class="modal-cancel" onclick="closeDeleteModal()">
+            Cancel
+          </button>
+          <button class="modal-confirm" onclick="confirmDelete()">
+            Yes, Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
       const MAX = 250;
       const STORAGE_KEY = "aristo_registrations";
       const PAGE_SIZE = 20;
       let currentPage = 1;
+      let pendingDeleteId = null;
 
       function getRegistrations() {
         return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
       }
+      function saveRegistrations(d) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+      }
 
-      // ── Filter logic ──
+      // ── Filter ──
       function getFiltered() {
         const q = (
           (document.getElementById("globalSearch")?.value || "") +
@@ -716,15 +983,15 @@
         )
           .toLowerCase()
           .trim();
-
         const all = getRegistrations();
         if (!q) return all;
         return all.filter(
           (r) =>
-            r.name.toLowerCase().includes(q) ||
-            r.nationalId.includes(q) ||
-            r.email.toLowerCase().includes(q) ||
-            r.phone.includes(q),
+            (r.name || "").toLowerCase().includes(q) ||
+            (r.nationalId || "").includes(q) ||
+            (r.email || "").toLowerCase().includes(q) ||
+            (r.phone || "").includes(q) ||
+            (r.title || "").toLowerCase().includes(q),
         );
       }
 
@@ -734,7 +1001,6 @@
         const total = all.length;
         const left = Math.max(MAX - total, 0);
         const pct = Math.round((total / MAX) * 100);
-
         const today = new Date().toLocaleDateString("en-GB");
         const todayCount = all.filter(
           (r) => r.date && r.date.startsWith(today),
@@ -747,21 +1013,61 @@
         document.getElementById("statBar").style.width = pct + "%";
         document.getElementById("sidebarCount").textContent = total;
 
-        // Color bar
         const bar = document.getElementById("statBar");
         if (pct >= 90)
           bar.style.background = "linear-gradient(90deg,#e53935,#ff6b6b)";
         else if (pct >= 60)
           bar.style.background = "linear-gradient(90deg,#f59e0b,#ff7f00)";
+        else
+          bar.style.background =
+            "linear-gradient(90deg,var(--cyan-500),var(--green-600))";
       }
 
-      // ── Render table ──
+      // ── Title breakdown ──
+      function updateBreakdown() {
+        const all = getRegistrations();
+        const counts = {};
+        all.forEach((r) => {
+          const t = (r.title || "Other").trim();
+          counts[t] = (counts[t] || 0) + 1;
+        });
+
+        const colors = [
+          "#009ecf",
+          "#46b000",
+          "#ff7f00",
+          "#b06ee0",
+          "#f59e0b",
+          "#e53935",
+        ];
+        const grid = document.getElementById("breakdownGrid");
+        grid.innerHTML = "";
+
+        Object.entries(counts)
+          .sort((a, b) => b[1] - a[1])
+          .forEach(([title, count], i) => {
+            const color = colors[i % colors.length];
+            grid.innerHTML += `
+              <div class="breakdown-item">
+                <div class="breakdown-dot" style="background:${color}"></div>
+                <div>
+                  <div style="font-size:.9rem;font-weight:700">${esc(title)}</div>
+                  <div class="breakdown-label">registrations</div>
+                </div>
+                <div class="breakdown-count" style="color:${color}">${count}</div>
+              </div>`;
+          });
+
+        // Hide breakdown section if empty
+        grid.style.display = Object.keys(counts).length ? "grid" : "none";
+      }
+
+      // ── Table ──
       function renderTable() {
         const filtered = getFiltered();
         const total = filtered.length;
         const pages = Math.ceil(total / PAGE_SIZE) || 1;
         currentPage = Math.min(currentPage, pages);
-
         const start = (currentPage - 1) * PAGE_SIZE;
         const slice = filtered.slice(start, start + PAGE_SIZE);
 
@@ -780,28 +1086,28 @@
             tr.innerHTML = `
               <td style="color:var(--text-muted)">${r.id}</td>
               <td><strong>${esc(r.name)}</strong></td>
+              <td>${titleBadge(r.title)}</td>
               <td>${esc(r.nationalId)}</td>
               <td>${esc(r.phone)}</td>
               <td>${esc(r.email)}</td>
               <td style="color:var(--text-muted);white-space:nowrap">${esc(r.date)}</td>
+              <td><button class="del-btn" onclick="openDeleteModal(${r.id},'${esc(r.name)}')" title="Delete"><i class="fas fa-trash"></i></button></td>
             `;
             tbody.appendChild(tr);
           });
         }
 
-        // Pagination info
         document.getElementById("paginationInfo").textContent =
-          `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, total)} of ${total}`;
+          `Showing ${Math.min(start + 1, total)}–${Math.min(start + PAGE_SIZE, total)} of ${total}`;
 
-        // Pagination buttons
         const btnsWrap = document.getElementById("paginationBtns");
         btnsWrap.innerHTML = "";
-        const prevBtn = makeBtn("‹ Prev", currentPage <= 1, () => {
-          currentPage--;
-          renderTable();
-        });
-        btnsWrap.appendChild(prevBtn);
-
+        btnsWrap.appendChild(
+          makeBtn("‹ Prev", currentPage <= 1, () => {
+            currentPage--;
+            renderTable();
+          }),
+        );
         for (let p = 1; p <= pages; p++) {
           if (
             pages > 7 &&
@@ -824,12 +1130,22 @@
           if (p === currentPage) btn.classList.add("active");
           btnsWrap.appendChild(btn);
         }
+        btnsWrap.appendChild(
+          makeBtn("Next ›", currentPage >= pages, () => {
+            currentPage++;
+            renderTable();
+          }),
+        );
+      }
 
-        const nextBtn = makeBtn("Next ›", currentPage >= pages, () => {
-          currentPage++;
-          renderTable();
-        });
-        btnsWrap.appendChild(nextBtn);
+      function titleBadge(t) {
+        const v = (t || "Other").toLowerCase();
+        let cls = "other";
+        if (v.includes("student")) cls = "student";
+        else if (v.includes("teacher")) cls = "teacher";
+        else if (v.includes("parent")) cls = "parent";
+        else if (v.includes("admin")) cls = "admin";
+        return `<span class="title-badge ${cls}">${esc(t || "Other")}</span>`;
       }
 
       function makeBtn(label, disabled, onClick) {
@@ -845,67 +1161,115 @@
         return String(str ?? "")
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
       }
 
-      // ── Excel Export ──
+      // ── Refresh ──
+      function refreshAll() {
+        const icon = document.getElementById("refreshIcon");
+        icon.style.transition = "transform 0.5s";
+        icon.style.transform = "rotate(360deg)";
+        setTimeout(() => {
+          icon.style.transition = "none";
+          icon.style.transform = "rotate(0deg)";
+        }, 500);
+        updateStats();
+        updateBreakdown();
+        renderTable();
+        document.getElementById("lastUpdated").textContent =
+          "Last updated: " + new Date().toLocaleTimeString("en-GB");
+      }
+
+      // ── Clear all modal ──
+      function openClearModal() {
+        document.getElementById("modalCount").textContent =
+          getRegistrations().length;
+        document.getElementById("clearModal").classList.add("show");
+      }
+      function closeClearModal() {
+        document.getElementById("clearModal").classList.remove("show");
+      }
+      function clearAll() {
+        localStorage.removeItem(STORAGE_KEY);
+        closeClearModal();
+        refreshAll();
+      }
+
+      // ── Single delete modal ──
+      function openDeleteModal(id, name) {
+        pendingDeleteId = id;
+        document.getElementById("deleteModalName").textContent = name;
+        document.getElementById("deleteModal").classList.add("show");
+      }
+      function closeDeleteModal() {
+        document.getElementById("deleteModal").classList.remove("show");
+        pendingDeleteId = null;
+      }
+      function confirmDelete() {
+        if (pendingDeleteId === null) return;
+        const updated = getRegistrations().filter(
+          (r) => r.id !== pendingDeleteId,
+        );
+        saveRegistrations(updated);
+        closeDeleteModal();
+        refreshAll();
+      }
+
+      // ── Excel export ──
       function exportExcel() {
         const data = getRegistrations();
-        if (data.length === 0) {
+        if (!data.length) {
           alert("No registrations to export yet.");
           return;
         }
-
         const rows = data.map((r) => ({
           "#": r.id,
           "Full Name": r.name,
+          Title: r.title || "",
           "National ID": r.nationalId,
           Phone: r.phone,
           Email: r.email,
           "Date Registered": r.date,
         }));
-
         const ws = XLSX.utils.json_to_sheet(rows);
-
-        // Column widths
         ws["!cols"] = [
           { wch: 5 },
           { wch: 28 },
+          { wch: 22 },
           { wch: 16 },
           { wch: 18 },
           { wch: 30 },
           { wch: 22 },
         ];
-
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Registrations");
-
-        const today = new Date().toISOString().slice(0, 10);
-        XLSX.writeFile(wb, `Aristo_Registrations_${today}.xlsx`);
+        XLSX.writeFile(
+          wb,
+          `Aristo_Registrations_${new Date().toISOString().slice(0, 10)}.xlsx`,
+        );
       }
 
-      // ── Sidebar mobile close on outside click ──
+      // ── Close modals on overlay click ──
+      document.getElementById("clearModal").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeClearModal();
+      });
+      document.getElementById("deleteModal").addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) closeDeleteModal();
+      });
+
+      // ── Sidebar mobile ──
       document.addEventListener("click", (e) => {
-        const sidebar = document.getElementById("sidebar");
-        if (window.innerWidth <= 768 && sidebar.classList.contains("open")) {
-          if (
-            !sidebar.contains(e.target) &&
-            !e.target.closest(".sidebar-toggle")
-          ) {
-            sidebar.classList.remove("open");
-          }
+        const sb = document.getElementById("sidebar");
+        if (window.innerWidth <= 768 && sb.classList.contains("open")) {
+          if (!sb.contains(e.target) && !e.target.closest(".sidebar-toggle"))
+            sb.classList.remove("open");
         }
       });
 
       // ── Init ──
-      updateStats();
-      renderTable();
-
-      // Live refresh every 30 seconds (useful if someone submits the form in another tab)
-      setInterval(() => {
-        updateStats();
-        renderTable();
-      }, 30000);
+      refreshAll();
+      setInterval(refreshAll, 30000);
     </script>
   </body>
 </html>

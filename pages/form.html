@@ -221,32 +221,38 @@
 
       /* ── CERTIFICATE HERO ── */
       .cert-hero {
-        padding-top: 105px; /* header height offset */
+        padding-top: 105px;
         background: linear-gradient(180deg, #0d142b 0%, #1a0f3a 100%);
       }
       .cert-hero-inner {
-        max-width: 580px;
+        /* Full width with just a small breathing gap */
+        max-width: 960px;
         margin: 0 auto;
-        padding: 36px 20px 0;
+        padding: 32px 20px 0;
       }
-
-      /* Certificate image */
       .cert-image-wrap {
         width: 100%;
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Force a tall presence on the page */
+        max-height: 520px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.02);
       }
       .cert-image-wrap img {
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
         display: block;
       }
-      /* Placeholder shown when no real image */
       .cert-placeholder {
         width: 100%;
-        aspect-ratio: 16/7;
+        min-height: 340px;
         background: rgba(255, 255, 255, 0.03);
         border: 2px dashed rgba(70, 176, 0, 0.3);
         border-radius: 20px;
@@ -267,41 +273,41 @@
 
       /* ── SPONSOR LOGOS BAR ── */
       .sponsors-bar {
-        max-width: 860px;
+        max-width: 960px;
+        height: 110px;
         margin: 0 auto;
-        padding: 28px 20px;
+        padding: 24px 20px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         gap: 20px;
       }
-
       .sponsor-slot {
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 14px 20px;
+        padding: 12px 16px;
         background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 14px;
-        min-height: 80px;
-        transition: border-color 0.3s;
+        /* Fixed height so both slots are the same */
+        height: 90px;
+        overflow: hidden;
       }
       .sponsor-slot:hover {
-        border-color: rgba(0, 158, 207, 0.3);
+        border-color: rgba(0, 158, 207, 0.35);
       }
-
       .sponsor-slot img {
+        /* Fill the slot while keeping aspect ratio */
         max-width: 100%;
-        max-height: 56px;
         width: auto;
         height: auto;
         object-fit: contain;
+
         display: block;
       }
-
-      /* Placeholder slot (no image yet) */
+      /* Fallback empty state */
       .sponsor-slot.empty {
         border-style: dashed;
         border-color: rgba(255, 255, 255, 0.15);
@@ -317,7 +323,6 @@
         font-size: 1.4rem;
         color: rgba(255, 255, 255, 0.15);
       }
-
       .sponsors-divider {
         width: 1px;
         height: 50px;
@@ -383,7 +388,6 @@
         box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
         backdrop-filter: blur(12px);
       }
-
       .card-header {
         text-align: center;
         margin-bottom: 32px;
@@ -433,7 +437,6 @@
         color: #ff6b6b;
         margin-left: 3px;
       }
-
       .input-wrap {
         position: relative;
       }
@@ -446,7 +449,6 @@
         font-size: 1rem;
         pointer-events: none;
       }
-
       input {
         width: 100%;
         padding: 13px 18px 13px 46px;
@@ -471,7 +473,6 @@
       input.error {
         border-color: var(--red);
       }
-
       .field-error {
         font-family: Punoer, sans-serif;
         font-size: 0.82rem;
@@ -516,17 +517,19 @@
         transform: none;
       }
 
-      /* ── FULL STATE ── */
-      .full-screen {
+      /* ── STATES ── */
+      .full-screen,
+      .success-screen {
         display: none;
         text-align: center;
         padding: 20px 0;
         animation: fadeInUp 0.5s ease-out;
       }
-      .full-screen.show {
+      .full-screen.show,
+      .success-screen.show {
         display: block;
       }
-      .full-screen i {
+      .full-screen > i {
         font-size: 4.5rem;
         color: var(--orange);
         display: block;
@@ -538,24 +541,14 @@
         color: var(--orange);
         margin-bottom: 14px;
       }
-      .full-screen p {
+      .full-screen p,
+      .success-screen p {
         font-family: Punoer, sans-serif;
         font-size: 1rem;
         color: rgba(255, 255, 255, 0.7);
         line-height: 1.8;
         max-width: 420px;
         margin: 0 auto 28px;
-      }
-
-      /* ── SUCCESS STATE ── */
-      .success-screen {
-        display: none;
-        text-align: center;
-        padding: 20px 0;
-        animation: fadeInUp 0.5s ease-out;
-      }
-      .success-screen.show {
-        display: block;
       }
       .success-screen i.check {
         font-size: 4.5rem;
@@ -568,14 +561,6 @@
         font-size: 2rem;
         color: var(--green-600);
         margin-bottom: 14px;
-      }
-      .success-screen p {
-        font-family: Punoer, sans-serif;
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.8;
-        max-width: 420px;
-        margin: 0 auto 28px;
       }
 
       .back-btn {
@@ -658,17 +643,34 @@
           padding: 20px;
         }
       }
+      @media (max-width: 768px) {
+        .cert-hero-inner {
+          padding: 24px 16px 0;
+        }
+        .cert-image-wrap {
+          max-height: 340px;
+        }
+        .sponsors-bar {
+          padding: 18px 16px;
+          gap: 12px;
+        }
+        .sponsor-slot {
+          height: 76px;
+          padding: 10px 12px;
+        }
+        .sponsor-slot img {
+          max-height: 54px;
+        }
+      }
       @media (max-width: 600px) {
         .form-card {
           padding: 28px 18px;
         }
-        .sponsors-bar {
-          padding: 20px 16px;
-          gap: 12px;
+        .cert-image-wrap {
+          max-height: 260px;
         }
         .sponsor-slot {
-          padding: 12px 14px;
-          min-height: 66px;
+          height: 66px;
         }
         .sponsor-slot img {
           max-height: 44px;
@@ -680,9 +682,6 @@
         }
         .brand-logo {
           height: 45px;
-        }
-        .cert-hero-inner {
-          padding-top: 28px;
         }
       }
     </style>
@@ -726,10 +725,9 @@
       </div>
     </header>
 
-    <!-- ── CERTIFICATE HERO ── -->
+    <!-- CERTIFICATE HERO -->
     <div class="cert-hero">
       <div class="cert-hero-inner">
-        <!-- Certificate image — replace src when ready -->
         <div class="cert-image-wrap">
           <img
             src="../images/STEMcertificate.png"
@@ -755,7 +753,7 @@
     <section class="form-section">
       <div class="form-wrapper">
         <div class="form-card">
-          <!-- ── FORM ── -->
+          <!-- FORM -->
           <div id="formContent">
             <div class="card-header">
               <h2>Register <span>Now</span></h2>
@@ -842,30 +840,36 @@
             <button class="submit-btn" id="submitBtn" onclick="submitForm()">
               <i class="fas fa-paper-plane"></i> Submit Registration
             </button>
+          </div>
 
-            <!-- ── LOGOS BELOW FORM ── -->
-            <div class="sponsors-bar">
-              <div class="sponsor-slot">
-                <img
-                  src="../images/formLogo.png"
-                  alt="Sponsor Logo"
-                  onerror="
-                    this.parentElement.classList.add('empty');
-                    this.parentElement.innerHTML =
-                      '<i class=\'fas fa-image\'></i><span>Logo 1</span>';
-                  "
-                />
-              </div>
-              <div class="sponsors-divider"></div>
-              <!-- Replace div below with <img src="../images/sponsor2.png"> when ready -->
-              <div class="sponsor-slot empty">
-                <i class="fas fa-image"></i>
-                <span>Logo 2</span>
-              </div>
+          <!-- SPONSORS BAR -->
+          <div class="sponsors-bar">
+            <div class="sponsor-slot">
+              <img
+                src="../images/formLogo.png"
+                alt="Partner Logo"
+                onerror="
+                  this.parentElement.classList.add('empty');
+                  this.parentElement.innerHTML =
+                    '<i class=\'fas fa-image\'></i><span>Logo 1</span>';
+                "
+              />
+            </div>
+            <div class="sponsors-divider"></div>
+            <div class="sponsor-slot">
+              <img
+                src="../images/Horizontal YOUTH-23.jpg.jpeg"
+                alt="Youth Partner Logo"
+                onerror="
+                  this.parentElement.classList.add('empty');
+                  this.parentElement.innerHTML =
+                    '<i class=\'fas fa-image\'></i><span>Logo 2</span>';
+                "
+              />
             </div>
           </div>
 
-          <!-- ── FULL STATE ── -->
+          <!-- FULL STATE -->
           <div class="full-screen" id="fullScreen">
             <i class="fas fa-lock"></i>
             <h2>Registration Closed</h2>
@@ -880,7 +884,7 @@
             >
           </div>
 
-          <!-- ── SUCCESS STATE ── -->
+          <!-- SUCCESS STATE -->
           <div class="success-screen" id="successScreen">
             <i class="fas fa-check-circle check"></i>
             <h2>Registration Successful!</h2>
@@ -1048,7 +1052,12 @@
       const openBtn = document.querySelector(".mobile-toggle");
       const panel = document.querySelector(".mobile-panel");
       const closeBtn = document.querySelector(".mobile-close");
-      const mobileLinks = document.querySelectorAll(".mobile-link");
+      document.querySelectorAll(".mobile-link").forEach((l) =>
+        l.addEventListener("click", () => {
+          panel.classList.remove("open");
+          document.body.style.overflow = "";
+        }),
+      );
       openBtn.addEventListener("click", () => {
         panel.classList.add("open");
         document.body.style.overflow = "hidden";
@@ -1057,12 +1066,6 @@
         panel.classList.remove("open");
         document.body.style.overflow = "";
       });
-      mobileLinks.forEach((l) =>
-        l.addEventListener("click", () => {
-          panel.classList.remove("open");
-          document.body.style.overflow = "";
-        }),
-      );
 
       updateCounter();
       checkCapacity();
