@@ -25,7 +25,6 @@
         --cyan-500: #009ecf;
         --cyan-200: #97e7f5;
         --green-600: #46b000;
-        --green-light: #77c93d;
         --orange: #ff7f00;
         --purple: #6b2d91;
         --red: #e53935;
@@ -142,14 +141,19 @@
         justify-content: center;
         font-weight: 700;
         font-size: 0.9rem;
+        flex-shrink: 0;
       }
       .admin-name {
         font-size: 0.9rem;
         font-weight: 600;
       }
-      .admin-role {
-        font-size: 0.75rem;
+      .admin-email {
+        font-size: 0.72rem;
         color: var(--text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 130px;
       }
       .logout-btn {
         margin-left: auto;
@@ -185,6 +189,8 @@
         position: sticky;
         top: 0;
         z-index: 50;
+        flex-wrap: wrap;
+        gap: 10px;
       }
       .topbar-left {
         display: flex;
@@ -207,7 +213,7 @@
         color: var(--cyan-500);
       }
       .last-updated {
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         color: var(--text-muted);
       }
 
@@ -243,35 +249,43 @@
       }
 
       .icon-btn {
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        color: var(--text-dim);
         width: 38px;
         height: 38px;
         border-radius: 10px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        cursor: pointer;
+        font-size: 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: all 0.3s;
+        transition: all 0.25s;
       }
       .icon-btn:hover {
-        color: var(--white);
         border-color: var(--cyan-500);
+        color: var(--cyan-500);
+      }
+      .icon-btn.spinning i {
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
 
       .export-btn {
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 18px;
+        padding: 9px 18px;
         background: linear-gradient(135deg, #1d6f42, #2e8b57);
         color: white;
         border: none;
         border-radius: 10px;
         font-family: Punoer, sans-serif;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         font-weight: 700;
         cursor: pointer;
         transition: all 0.3s;
@@ -286,20 +300,21 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 18px;
+        padding: 9px 16px;
         background: rgba(229, 57, 53, 0.12);
-        color: var(--red);
+        color: #ff8a80;
         border: 1px solid rgba(229, 57, 53, 0.3);
         border-radius: 10px;
         font-family: Punoer, sans-serif;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         font-weight: 700;
         cursor: pointer;
         transition: all 0.3s;
       }
       .danger-btn:hover {
-        background: rgba(229, 57, 53, 0.22);
+        background: rgba(229, 57, 53, 0.25);
         border-color: var(--red);
+        color: white;
       }
 
       /* ── CONTENT ── */
@@ -385,12 +400,12 @@
 
       /* ── TITLE BREAKDOWN ── */
       .breakdown-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        display: flex;
         gap: 12px;
+        flex-wrap: wrap;
         margin-bottom: 28px;
       }
-      .breakdown-item {
+      .breakdown-card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 14px;
@@ -398,21 +413,41 @@
         display: flex;
         align-items: center;
         gap: 14px;
+        flex: 1;
+        min-width: 150px;
       }
-      .breakdown-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        flex-shrink: 0;
+      .breakdown-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
       }
-      .breakdown-label {
-        font-size: 0.85rem;
-        color: var(--text-muted);
+      .badge-student {
+        background: rgba(0, 158, 207, 0.15);
+        color: var(--cyan-500);
+      }
+      .badge-teacher {
+        background: rgba(70, 176, 0, 0.15);
+        color: var(--green-600);
+      }
+      .badge-parent {
+        background: rgba(255, 127, 0, 0.15);
+        color: var(--orange);
+      }
+      .badge-admin {
+        background: rgba(107, 45, 145, 0.15);
+        color: #b06ee0;
+      }
+      .badge-other {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-dim);
       }
       .breakdown-count {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: 900;
-        margin-left: auto;
       }
 
       /* ── PANEL ── */
@@ -436,7 +471,6 @@
         font-size: 1rem;
         font-weight: 700;
       }
-
       .table-search {
         display: flex;
         align-items: center;
@@ -472,8 +506,8 @@
       }
       th {
         text-align: left;
-        padding: 14px 16px;
-        font-size: 0.72rem;
+        padding: 14px 20px;
+        font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         color: var(--text-muted);
@@ -491,49 +525,18 @@
         border-bottom: none;
       }
       td {
-        padding: 13px 16px;
-        font-size: 0.88rem;
+        padding: 14px 20px;
+        font-size: 0.9rem;
         color: var(--text-dim);
       }
       td strong {
         color: var(--white);
       }
 
-      /* title badge */
-      .title-badge {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        white-space: nowrap;
-      }
-      .title-badge.student {
-        background: rgba(0, 158, 207, 0.15);
-        color: var(--cyan-500);
-      }
-      .title-badge.teacher {
-        background: rgba(70, 176, 0, 0.15);
-        color: var(--green-light);
-      }
-      .title-badge.parent {
-        background: rgba(255, 127, 0, 0.15);
-        color: var(--orange);
-      }
-      .title-badge.admin {
-        background: rgba(107, 45, 145, 0.15);
-        color: #b06ee0;
-      }
-      .title-badge.other {
-        background: rgba(255, 255, 255, 0.08);
-        color: var(--text-dim);
-      }
-
-      /* delete row button */
       .del-btn {
         background: none;
         border: none;
-        color: rgba(229, 57, 53, 0.4);
+        color: rgba(229, 57, 53, 0.5);
         cursor: pointer;
         font-size: 0.95rem;
         padding: 4px 8px;
@@ -560,6 +563,7 @@
         font-size: 0.95rem;
       }
 
+      /* Pagination */
       .pagination {
         display: flex;
         align-items: center;
@@ -602,45 +606,46 @@
         cursor: not-allowed;
       }
 
-      /* ── CONFIRM MODAL ── */
+      /* ── MODAL ── */
       .modal-overlay {
-        display: none;
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(4px);
-        z-index: 999;
+        z-index: 500;
+        display: none;
         align-items: center;
         justify-content: center;
+        padding: 20px;
       }
       .modal-overlay.show {
         display: flex;
       }
       .modal {
-        background: #111827;
+        background: #141e3a;
         border: 1px solid var(--card-border);
         border-radius: 20px;
         padding: 36px 32px;
-        max-width: 400px;
-        width: 90%;
+        max-width: 420px;
+        width: 100%;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
         text-align: center;
         animation: fadeInUp 0.3s ease-out;
       }
       .modal i {
         font-size: 3rem;
-        color: var(--red);
         display: block;
         margin-bottom: 16px;
       }
       .modal h3 {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         margin-bottom: 10px;
       }
       .modal p {
-        font-size: 0.9rem;
+        font-size: 0.92rem;
         color: var(--text-dim);
-        margin-bottom: 28px;
-        line-height: 1.6;
+        line-height: 1.7;
+        margin-bottom: 24px;
       }
       .modal-btns {
         display: flex;
@@ -648,35 +653,33 @@
         justify-content: center;
       }
       .modal-cancel {
-        padding: 12px 28px;
+        padding: 11px 28px;
         border-radius: 50px;
-        background: var(--card-bg);
+        background: rgba(255, 255, 255, 0.06);
         border: 1px solid var(--card-border);
         color: var(--text-dim);
         font-family: Punoer, sans-serif;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: all 0.2s;
       }
       .modal-cancel:hover {
-        border-color: var(--cyan-500);
-        color: var(--white);
+        background: rgba(255, 255, 255, 0.1);
       }
       .modal-confirm {
-        padding: 12px 28px;
+        padding: 11px 28px;
         border-radius: 50px;
         background: var(--red);
         border: none;
         color: white;
         font-family: Punoer, sans-serif;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 700;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: all 0.2s;
       }
       .modal-confirm:hover {
-        background: #c62828;
-        transform: translateY(-1px);
+        background: #f44336;
       }
 
       @keyframes fadeInUp {
@@ -693,9 +696,6 @@
       /* ── RESPONSIVE ── */
       @media (max-width: 1200px) {
         .stats-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .breakdown-grid {
           grid-template-columns: repeat(2, 1fr);
         }
       }
@@ -722,15 +722,9 @@
           grid-template-columns: repeat(2, 1fr);
           gap: 14px;
         }
-        .breakdown-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
       }
       @media (max-width: 480px) {
         .stats-grid {
-          grid-template-columns: 1fr;
-        }
-        .breakdown-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -750,23 +744,25 @@
           ><i class="fas fa-file-alt"></i> Registrations
           <span class="nav-badge" id="sidebarCount">0</span></a
         >
-        <p class="nav-section-label" style="margin-top: 10px">System</p>
+        <p class="nav-section-label" style="margin-top: 10px">Links</p>
         <a class="nav-item" href="../index.html"
           ><i class="fas fa-globe"></i> View Website</a
         >
         <a class="nav-item" href="./form.html"
           ><i class="fas fa-wpforms"></i> View Form</a
         >
-        <a class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+        <a class="nav-item" href="./login.html" id="logoutSidebarBtn"
+          ><i class="fas fa-sign-out-alt"></i> Logout</a
+        >
       </nav>
       <div class="sidebar-footer">
         <div class="admin-info">
-          <div class="admin-avatar">AM</div>
+          <div class="admin-avatar" id="adminAvatar">A</div>
           <div>
             <p class="admin-name">Admin</p>
-            <p class="admin-role">Super Admin</p>
+            <p class="admin-email" id="adminEmail">—</p>
           </div>
-          <button class="logout-btn" title="Logout">
+          <button class="logout-btn" title="Logout" onclick="doLogout()">
             <i class="fas fa-sign-out-alt"></i>
           </button>
         </div>
@@ -787,7 +783,7 @@
           </button>
           <div>
             <div class="page-title">Registrations <span>Dashboard</span></div>
-            <div class="last-updated" id="lastUpdated">Last updated: —</div>
+            <div class="last-updated" id="lastUpdated">Loading...</div>
           </div>
         </div>
         <div class="topbar-right">
@@ -800,14 +796,18 @@
               oninput="renderTable()"
             />
           </div>
-          <!-- Manual refresh -->
-          <button class="icon-btn" onclick="refreshAll()" title="Refresh data">
-            <i class="fas fa-sync-alt" id="refreshIcon"></i>
+          <button
+            class="icon-btn"
+            id="refreshBtn"
+            title="Refresh"
+            onclick="refreshData(this)"
+          >
+            <i class="fas fa-sync-alt"></i>
           </button>
           <button class="export-btn" onclick="exportExcel()">
             <i class="fas fa-file-excel"></i> Export Excel
           </button>
-          <button class="danger-btn" onclick="openClearModal()">
+          <button class="danger-btn" onclick="confirmClearAll()">
             <i class="fas fa-trash-alt"></i> Clear All
           </button>
         </div>
@@ -820,7 +820,7 @@
             <div class="stat-header">
               <div class="stat-icon cyan"><i class="fas fa-users"></i></div>
             </div>
-            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-value" id="statTotal">—</div>
             <div class="stat-label">Total Registrations</div>
             <div class="capacity-bar-wrap">
               <div class="capacity-bar" id="statBar" style="width: 0%"></div>
@@ -830,7 +830,7 @@
             <div class="stat-header">
               <div class="stat-icon green"><i class="fas fa-chair"></i></div>
             </div>
-            <div class="stat-value" id="statLeft">250</div>
+            <div class="stat-value" id="statLeft">—</div>
             <div class="stat-label">Spots Remaining</div>
           </div>
           <div class="stat-card">
@@ -839,7 +839,7 @@
                 <i class="fas fa-calendar-day"></i>
               </div>
             </div>
-            <div class="stat-value" id="statToday">0</div>
+            <div class="stat-value" id="statToday">—</div>
             <div class="stat-label">Registered Today</div>
           </div>
           <div class="stat-card">
@@ -848,7 +848,7 @@
                 <i class="fas fa-percentage"></i>
               </div>
             </div>
-            <div class="stat-value" id="statPct">0%</div>
+            <div class="stat-value" id="statPct">—</div>
             <div class="stat-label">Capacity Filled</div>
           </div>
         </div>
@@ -873,7 +873,7 @@
                 <input
                   type="text"
                   id="tableSearch"
-                  placeholder="Filter by name, ID, email, title..."
+                  placeholder="Filter by name, ID, email..."
                   oninput="renderTable()"
                 />
               </div>
@@ -920,62 +920,202 @@
       </div>
     </div>
 
-    <!-- CONFIRM MODAL (clear all) -->
-    <div class="modal-overlay" id="clearModal">
+    <!-- DELETE MODAL -->
+    <div class="modal-overlay" id="deleteModal">
       <div class="modal">
-        <i class="fas fa-exclamation-triangle"></i>
-        <h3>Clear All Registrations?</h3>
-        <p>
-          This will permanently delete all
-          <strong id="modalCount">0</strong> registrations. This action cannot
-          be undone.
+        <i class="fas fa-user-times" style="color: var(--red)"></i>
+        <h3>Delete Registration</h3>
+        <p id="deleteModalMsg">
+          Are you sure you want to delete this registration?
         </p>
         <div class="modal-btns">
-          <button class="modal-cancel" onclick="closeClearModal()">
+          <button class="modal-cancel" onclick="closeModal('deleteModal')">
             Cancel
           </button>
-          <button class="modal-confirm" onclick="clearAll()">
-            Yes, Delete All
-          </button>
+          <button class="modal-confirm" id="deleteConfirmBtn">Delete</button>
         </div>
       </div>
     </div>
 
-    <!-- CONFIRM MODAL (single delete) -->
-    <div class="modal-overlay" id="deleteModal">
+    <!-- CLEAR ALL MODAL -->
+    <div class="modal-overlay" id="clearModal">
       <div class="modal">
-        <i class="fas fa-user-times"></i>
-        <h3>Delete Registration?</h3>
-        <p>
-          Remove <strong id="deleteModalName"></strong> from the list? This
-          cannot be undone.
+        <i class="fas fa-exclamation-triangle" style="color: var(--orange)"></i>
+        <h3>Clear All Registrations</h3>
+        <p id="clearModalMsg">
+          This will permanently delete all registrations. This cannot be undone.
         </p>
         <div class="modal-btns">
-          <button class="modal-cancel" onclick="closeDeleteModal()">
+          <button class="modal-cancel" onclick="closeModal('clearModal')">
             Cancel
           </button>
-          <button class="modal-confirm" onclick="confirmDelete()">
-            Yes, Delete
-          </button>
+          <button class="modal-confirm" id="clearConfirmBtn">Delete All</button>
         </div>
       </div>
     </div>
 
     <script>
+      // ── CONFIG ──────────────────────────────────────────────────
+      const SUPABASE_URL = "https://bhowdqqunyneealrvxim.supabase.co";
+      const SUPABASE_ANON =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJob3dkcXF1bnluZWVhbHJ2eGltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTkzNjgsImV4cCI6MjA5NjY3NTM2OH0.1yBrMcnr4W6GSPagTcDug7Yj_XyZb9DM__OGjeXFsR4";
       const MAX = 250;
-      const STORAGE_KEY = "aristo_registrations";
       const PAGE_SIZE = 20;
+
+      let allData = [];
       let currentPage = 1;
-      let pendingDeleteId = null;
+      let accessToken = null;
 
-      function getRegistrations() {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      }
-      function saveRegistrations(d) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+      // ── AUTH GUARD ──────────────────────────────────────────────
+      function getSession() {
+        try {
+          const s = JSON.parse(localStorage.getItem("aristo_session") || "{}");
+          if (s.access_token && s.expires_at > Date.now()) return s;
+          return null;
+        } catch (e) {
+          return null;
+        }
       }
 
-      // ── Filter ──
+      const session = getSession();
+      if (!session) {
+        window.location.replace("./login.html");
+      } else {
+        accessToken = session.access_token;
+        // Show admin email
+        try {
+          const payload = JSON.parse(atob(accessToken.split(".")[1]));
+          const email = payload.email || "Admin";
+          document.getElementById("adminEmail").textContent = email;
+          document.getElementById("adminAvatar").textContent =
+            email[0].toUpperCase();
+        } catch (e) {}
+      }
+
+      function doLogout() {
+        localStorage.removeItem("aristo_session");
+        window.location.replace("./login.html");
+      }
+      document
+        .getElementById("logoutSidebarBtn")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          doLogout();
+        });
+
+      // ── API HELPERS ──────────────────────────────────────────────
+      async function sbFetch(path, options = {}) {
+        const res = await fetch(SUPABASE_URL + path, {
+          ...options,
+          headers: {
+            apikey: SUPABASE_ANON,
+            Authorization: "Bearer " + accessToken,
+            "Content-Type": "application/json",
+            ...(options.headers || {}),
+          },
+        });
+        // Handle expired token
+        if (res.status === 401) {
+          doLogout();
+        }
+        return res;
+      }
+
+      // ── LOAD DATA ────────────────────────────────────────────────
+      async function loadData() {
+        try {
+          const res = await sbFetch(
+            "/rest/v1/registrations?select=*&order=created_at.asc",
+          );
+          if (!res.ok) throw new Error("Fetch failed");
+          allData = await res.json();
+          updateStats();
+          renderBreakdown();
+          renderTable();
+          document.getElementById("lastUpdated").textContent =
+            "Last updated: " + new Date().toLocaleTimeString("en-GB");
+          document.getElementById("sidebarCount").textContent = allData.length;
+        } catch (e) {
+          console.error("Load error:", e);
+          document.getElementById("lastUpdated").textContent =
+            "Failed to load data";
+        }
+      }
+
+      async function refreshData(btn) {
+        btn.classList.add("spinning");
+        await loadData();
+        setTimeout(() => btn.classList.remove("spinning"), 600);
+      }
+
+      // ── STATS ────────────────────────────────────────────────────
+      function updateStats() {
+        const total = allData.length;
+        const left = Math.max(MAX - total, 0);
+        const pct = Math.round((total / MAX) * 100);
+
+        const todayStr = new Date().toLocaleDateString("en-GB");
+        const todayCount = allData.filter((r) => {
+          const d = new Date(r.created_at).toLocaleDateString("en-GB");
+          return d === todayStr;
+        }).length;
+
+        document.getElementById("statTotal").textContent = total;
+        document.getElementById("statLeft").textContent = left;
+        document.getElementById("statToday").textContent = todayCount;
+        document.getElementById("statPct").textContent = pct + "%";
+
+        const bar = document.getElementById("statBar");
+        bar.style.width = pct + "%";
+        if (pct >= 90)
+          bar.style.background = "linear-gradient(90deg,#e53935,#ff6b6b)";
+        else if (pct >= 60)
+          bar.style.background = "linear-gradient(90deg,#f59e0b,#ff7f00)";
+        else
+          bar.style.background =
+            "linear-gradient(90deg, var(--cyan-500), var(--green-600))";
+      }
+
+      // ── TITLE BREAKDOWN ──────────────────────────────────────────
+      const TITLE_BADGES = {
+        student: "badge-student",
+        teacher: "badge-teacher",
+        parent: "badge-parent",
+        admin: "badge-admin",
+      };
+
+      function getBadgeClass(title) {
+        const t = (title || "").toLowerCase();
+        for (const key of Object.keys(TITLE_BADGES)) {
+          if (t.includes(key)) return TITLE_BADGES[key];
+        }
+        return "badge-other";
+      }
+
+      function renderBreakdown() {
+        const counts = {};
+        allData.forEach((r) => {
+          const t = (r.title || "Other").trim();
+          counts[t] = (counts[t] || 0) + 1;
+        });
+        const grid = document.getElementById("breakdownGrid");
+        if (Object.keys(counts).length === 0) {
+          grid.innerHTML = "";
+          return;
+        }
+        grid.innerHTML = Object.entries(counts)
+          .sort((a, b) => b[1] - a[1])
+          .map(
+            ([t, c]) =>
+              `<div class="breakdown-card">
+            <span class="breakdown-badge ${getBadgeClass(t)}">${esc(t)}</span>
+            <span class="breakdown-count">${c}</span>
+          </div>`,
+          )
+          .join("");
+      }
+
+      // ── FILTER ───────────────────────────────────────────────────
       function getFiltered() {
         const q = (
           (document.getElementById("globalSearch")?.value || "") +
@@ -983,86 +1123,18 @@
         )
           .toLowerCase()
           .trim();
-        const all = getRegistrations();
-        if (!q) return all;
-        return all.filter(
+        if (!q) return allData;
+        return allData.filter(
           (r) =>
             (r.name || "").toLowerCase().includes(q) ||
-            (r.nationalId || "").includes(q) ||
+            (r.national_id || "").includes(q) ||
             (r.email || "").toLowerCase().includes(q) ||
             (r.phone || "").includes(q) ||
             (r.title || "").toLowerCase().includes(q),
         );
       }
 
-      // ── Stats ──
-      function updateStats() {
-        const all = getRegistrations();
-        const total = all.length;
-        const left = Math.max(MAX - total, 0);
-        const pct = Math.round((total / MAX) * 100);
-        const today = new Date().toLocaleDateString("en-GB");
-        const todayCount = all.filter(
-          (r) => r.date && r.date.startsWith(today),
-        ).length;
-
-        document.getElementById("statTotal").textContent = total;
-        document.getElementById("statLeft").textContent = left;
-        document.getElementById("statToday").textContent = todayCount;
-        document.getElementById("statPct").textContent = pct + "%";
-        document.getElementById("statBar").style.width = pct + "%";
-        document.getElementById("sidebarCount").textContent = total;
-
-        const bar = document.getElementById("statBar");
-        if (pct >= 90)
-          bar.style.background = "linear-gradient(90deg,#e53935,#ff6b6b)";
-        else if (pct >= 60)
-          bar.style.background = "linear-gradient(90deg,#f59e0b,#ff7f00)";
-        else
-          bar.style.background =
-            "linear-gradient(90deg,var(--cyan-500),var(--green-600))";
-      }
-
-      // ── Title breakdown ──
-      function updateBreakdown() {
-        const all = getRegistrations();
-        const counts = {};
-        all.forEach((r) => {
-          const t = (r.title || "Other").trim();
-          counts[t] = (counts[t] || 0) + 1;
-        });
-
-        const colors = [
-          "#009ecf",
-          "#46b000",
-          "#ff7f00",
-          "#b06ee0",
-          "#f59e0b",
-          "#e53935",
-        ];
-        const grid = document.getElementById("breakdownGrid");
-        grid.innerHTML = "";
-
-        Object.entries(counts)
-          .sort((a, b) => b[1] - a[1])
-          .forEach(([title, count], i) => {
-            const color = colors[i % colors.length];
-            grid.innerHTML += `
-              <div class="breakdown-item">
-                <div class="breakdown-dot" style="background:${color}"></div>
-                <div>
-                  <div style="font-size:.9rem;font-weight:700">${esc(title)}</div>
-                  <div class="breakdown-label">registrations</div>
-                </div>
-                <div class="breakdown-count" style="color:${color}">${count}</div>
-              </div>`;
-          });
-
-        // Hide breakdown section if empty
-        grid.style.display = Object.keys(counts).length ? "grid" : "none";
-      }
-
-      // ── Table ──
+      // ── TABLE ────────────────────────────────────────────────────
       function renderTable() {
         const filtered = getFiltered();
         const total = filtered.length;
@@ -1081,33 +1153,37 @@
           document.getElementById("emptyState").style.display = "none";
           document.getElementById("paginationWrap").style.display = "flex";
 
-          slice.forEach((r) => {
+          slice.forEach((r, idx) => {
             const tr = document.createElement("tr");
+            const dateStr = r.created_at
+              ? new Date(r.created_at).toLocaleString("en-GB")
+              : "—";
             tr.innerHTML = `
-              <td style="color:var(--text-muted)">${r.id}</td>
+              <td style="color:var(--text-muted)">${start + idx + 1}</td>
               <td><strong>${esc(r.name)}</strong></td>
-              <td>${titleBadge(r.title)}</td>
-              <td>${esc(r.nationalId)}</td>
+              <td><span class="breakdown-badge ${getBadgeClass(r.title)}">${esc(r.title)}</span></td>
+              <td>${esc(r.national_id)}</td>
               <td>${esc(r.phone)}</td>
               <td>${esc(r.email)}</td>
-              <td style="color:var(--text-muted);white-space:nowrap">${esc(r.date)}</td>
-              <td><button class="del-btn" onclick="openDeleteModal(${r.id},'${esc(r.name)}')" title="Delete"><i class="fas fa-trash"></i></button></td>
+              <td style="color:var(--text-muted);white-space:nowrap">${dateStr}</td>
+              <td><button class="del-btn" title="Delete" onclick="confirmDelete(${r.id}, '${esc(r.name)}')"><i class="fas fa-trash-alt"></i></button></td>
             `;
             tbody.appendChild(tr);
           });
         }
 
+        // Pagination info
         document.getElementById("paginationInfo").textContent =
-          `Showing ${Math.min(start + 1, total)}–${Math.min(start + PAGE_SIZE, total)} of ${total}`;
+          `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, total)} of ${total}`;
 
+        // Pagination buttons
         const btnsWrap = document.getElementById("paginationBtns");
         btnsWrap.innerHTML = "";
-        btnsWrap.appendChild(
-          makeBtn("‹ Prev", currentPage <= 1, () => {
-            currentPage--;
-            renderTable();
-          }),
-        );
+        const prev = makeBtn("‹ Prev", currentPage <= 1, () => {
+          currentPage--;
+          renderTable();
+        });
+        btnsWrap.appendChild(prev);
         for (let p = 1; p <= pages; p++) {
           if (
             pages > 7 &&
@@ -1130,22 +1206,11 @@
           if (p === currentPage) btn.classList.add("active");
           btnsWrap.appendChild(btn);
         }
-        btnsWrap.appendChild(
-          makeBtn("Next ›", currentPage >= pages, () => {
-            currentPage++;
-            renderTable();
-          }),
-        );
-      }
-
-      function titleBadge(t) {
-        const v = (t || "Other").toLowerCase();
-        let cls = "other";
-        if (v.includes("student")) cls = "student";
-        else if (v.includes("teacher")) cls = "teacher";
-        else if (v.includes("parent")) cls = "parent";
-        else if (v.includes("admin")) cls = "admin";
-        return `<span class="title-badge ${cls}">${esc(t || "Other")}</span>`;
+        const next = makeBtn("Next ›", currentPage >= pages, () => {
+          currentPage++;
+          renderTable();
+        });
+        btnsWrap.appendChild(next);
       }
 
       function makeBtn(label, disabled, onClick) {
@@ -1165,78 +1230,101 @@
           .replace(/"/g, "&quot;");
       }
 
-      // ── Refresh ──
-      function refreshAll() {
-        const icon = document.getElementById("refreshIcon");
-        icon.style.transition = "transform 0.5s";
-        icon.style.transform = "rotate(360deg)";
-        setTimeout(() => {
-          icon.style.transition = "none";
-          icon.style.transform = "rotate(0deg)";
-        }, 500);
-        updateStats();
-        updateBreakdown();
-        renderTable();
-        document.getElementById("lastUpdated").textContent =
-          "Last updated: " + new Date().toLocaleTimeString("en-GB");
-      }
-
-      // ── Clear all modal ──
-      function openClearModal() {
-        document.getElementById("modalCount").textContent =
-          getRegistrations().length;
-        document.getElementById("clearModal").classList.add("show");
-      }
-      function closeClearModal() {
-        document.getElementById("clearModal").classList.remove("show");
-      }
-      function clearAll() {
-        localStorage.removeItem(STORAGE_KEY);
-        closeClearModal();
-        refreshAll();
-      }
-
-      // ── Single delete modal ──
-      function openDeleteModal(id, name) {
-        pendingDeleteId = id;
-        document.getElementById("deleteModalName").textContent = name;
+      // ── DELETE ───────────────────────────────────────────────────
+      function confirmDelete(id, name) {
+        document.getElementById("deleteModalMsg").innerHTML =
+          `Are you sure you want to delete <strong>${esc(name)}</strong>'s registration? This cannot be undone.`;
+        document.getElementById("deleteConfirmBtn").onclick = () =>
+          deleteRow(id);
         document.getElementById("deleteModal").classList.add("show");
       }
-      function closeDeleteModal() {
-        document.getElementById("deleteModal").classList.remove("show");
-        pendingDeleteId = null;
-      }
-      function confirmDelete() {
-        if (pendingDeleteId === null) return;
-        const updated = getRegistrations().filter(
-          (r) => r.id !== pendingDeleteId,
-        );
-        saveRegistrations(updated);
-        closeDeleteModal();
-        refreshAll();
+
+      async function deleteRow(id) {
+        closeModal("deleteModal");
+        try {
+          const res = await sbFetch(`/rest/v1/registrations?id=eq.${id}`, {
+            method: "DELETE",
+          });
+          if (res.ok || res.status === 204) {
+            allData = allData.filter((r) => r.id !== id);
+            updateStats();
+            renderBreakdown();
+            renderTable();
+            document.getElementById("sidebarCount").textContent =
+              allData.length;
+          } else {
+            alert("Delete failed. Please try again.");
+          }
+        } catch (e) {
+          alert("Network error.");
+        }
       }
 
-      // ── Excel export ──
-      function exportExcel() {
-        const data = getRegistrations();
-        if (!data.length) {
-          alert("No registrations to export yet.");
+      // ── CLEAR ALL ────────────────────────────────────────────────
+      function confirmClearAll() {
+        if (allData.length === 0) {
+          alert("No registrations to delete.");
           return;
         }
-        const rows = data.map((r) => ({
-          "#": r.id,
+        document.getElementById("clearModalMsg").innerHTML =
+          `This will permanently delete all <strong>${allData.length} registrations</strong>. This cannot be undone.`;
+        document.getElementById("clearConfirmBtn").onclick = clearAll;
+        document.getElementById("clearModal").classList.add("show");
+      }
+
+      async function clearAll() {
+        closeModal("clearModal");
+        try {
+          // Delete all rows — using neq trick to match everything
+          const res = await sbFetch("/rest/v1/registrations?id=neq.0", {
+            method: "DELETE",
+          });
+          if (res.ok || res.status === 204) {
+            allData = [];
+            updateStats();
+            renderBreakdown();
+            renderTable();
+            document.getElementById("sidebarCount").textContent = "0";
+          } else {
+            alert("Clear failed. Please try again.");
+          }
+        } catch (e) {
+          alert("Network error.");
+        }
+      }
+
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("show");
+      }
+      // Close modal on overlay click
+      document.querySelectorAll(".modal-overlay").forEach((el) =>
+        el.addEventListener("click", (e) => {
+          if (e.target === el) el.classList.remove("show");
+        }),
+      );
+
+      // ── EXCEL EXPORT ─────────────────────────────────────────────
+      function exportExcel() {
+        if (allData.length === 0) {
+          alert("No registrations to export.");
+          return;
+        }
+        const rows = allData.map((r, i) => ({
+          "#": i + 1,
           "Full Name": r.name,
-          Title: r.title || "",
-          "National ID": r.nationalId,
+          Title: r.title,
+          "National ID": r.national_id,
           Phone: r.phone,
           Email: r.email,
-          "Date Registered": r.date,
+          "Date Registered": r.created_at
+            ? new Date(r.created_at).toLocaleString("en-GB")
+            : "—",
         }));
         const ws = XLSX.utils.json_to_sheet(rows);
         ws["!cols"] = [
           { wch: 5 },
           { wch: 28 },
-          { wch: 22 },
+          { wch: 20 },
           { wch: 16 },
           { wch: 18 },
           { wch: 30 },
@@ -1250,26 +1338,22 @@
         );
       }
 
-      // ── Close modals on overlay click ──
-      document.getElementById("clearModal").addEventListener("click", (e) => {
-        if (e.target === e.currentTarget) closeClearModal();
-      });
-      document.getElementById("deleteModal").addEventListener("click", (e) => {
-        if (e.target === e.currentTarget) closeDeleteModal();
-      });
-
-      // ── Sidebar mobile ──
+      // ── SIDEBAR MOBILE CLOSE ─────────────────────────────────────
       document.addEventListener("click", (e) => {
-        const sb = document.getElementById("sidebar");
-        if (window.innerWidth <= 768 && sb.classList.contains("open")) {
-          if (!sb.contains(e.target) && !e.target.closest(".sidebar-toggle"))
-            sb.classList.remove("open");
+        const sidebar = document.getElementById("sidebar");
+        if (window.innerWidth <= 768 && sidebar.classList.contains("open")) {
+          if (
+            !sidebar.contains(e.target) &&
+            !e.target.closest(".sidebar-toggle")
+          ) {
+            sidebar.classList.remove("open");
+          }
         }
       });
 
-      // ── Init ──
-      refreshAll();
-      setInterval(refreshAll, 30000);
+      // ── INIT ─────────────────────────────────────────────────────
+      loadData();
+      setInterval(loadData, 30000); // auto-refresh every 30s
     </script>
   </body>
 </html>

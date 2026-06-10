@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login — Aristo</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --navy-900: #0d142b;
+        --white: #ffffff;
+        --cyan-500: #009ecf;
+        --cyan-200: #97e7f5;
+        --green-600: #46b000;
+        --red: #e53935;
+      }
+
+      @font-face {
+        font-family: "Punoer";
+        src: url("../fonts/Punoer.otf") format("opentype");
+      }
+
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden;
+        font-family: Punoer, sans-serif;
+        background: var(--navy-900);
+        color: var(--white);
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(45, 27, 94, 0.95) 0%,
+            rgba(13, 20, 43, 0.98) 100%
+          ),
+          url("../images/pexels-markusspiske-1679716.jpg") center/cover
+            no-repeat;
+      }
+
+      .login-wrap {
+        width: 100%;
+        max-width: 440px;
+        padding: 20px;
+      }
+
+      /* Logo */
+      .login-logo {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .login-logo img {
+        height: 52px;
+        display: inline-block;
+      }
+      .login-logo p {
+        margin-top: 10px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Card */
+      .login-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 44px 40px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(14px);
+      }
+
+      .login-title {
+        font-size: 1.6rem;
+        font-weight: 900;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 6px;
+      }
+      .login-title span {
+        color: var(--cyan-500);
+      }
+      .login-sub {
+        text-align: center;
+        font-size: 0.88rem;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 32px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .login-divider {
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cyan-500), var(--green-600));
+        border-radius: 10px;
+        margin: 0 auto 32px;
+      }
+
+      /* Fields */
+      .field {
+        margin-bottom: 20px;
+      }
+      .field label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--cyan-200);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+      .field-wrap {
+        position: relative;
+      }
+      .field-wrap i {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 1rem;
+        pointer-events: none;
+      }
+      .field input {
+        width: 100%;
+        padding: 13px 18px 13px 46px;
+        border: 2px solid rgba(0, 158, 207, 0.25);
+        border-radius: 12px;
+        background: rgba(13, 20, 43, 0.7);
+        color: var(--white);
+        font-family: Punoer, sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+      }
+      .field input:focus {
+        outline: none;
+        border-color: var(--cyan-500);
+        background: rgba(13, 20, 43, 0.9);
+        box-shadow: 0 0 0 4px rgba(0, 158, 207, 0.12);
+      }
+      .field input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+        font-family: Punoer, sans-serif;
+      }
+      .field input.error {
+        border-color: var(--red);
+      }
+
+      /* Password toggle */
+      .pw-toggle {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+        padding: 4px;
+      }
+      .pw-toggle:hover {
+        color: var(--cyan-500);
+      }
+
+      /* Error message */
+      .login-error {
+        background: rgba(229, 57, 53, 0.12);
+        border: 1px solid rgba(229, 57, 53, 0.4);
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 0.88rem;
+        color: #ff8a80;
+        margin-bottom: 20px;
+        display: none;
+        text-align: center;
+      }
+      .login-error.show {
+        display: block;
+      }
+
+      /* Login button */
+      .login-btn {
+        width: 100%;
+        padding: 15px;
+        background: var(--cyan-500);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-family: Punoer, sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 8px 25px rgba(0, 158, 207, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 8px;
+      }
+      .login-btn:hover {
+        background: #00b8ef;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 158, 207, 0.5);
+      }
+      .login-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Back link */
+      .back-link {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .back-link a {
+        color: var(--cyan-500);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .back-link a:hover {
+        color: var(--cyan-200);
+      }
+
+      @media (max-width: 480px) {
+        .login-card {
+          padding: 32px 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-wrap">
+      <div class="login-logo">
+        <img src="../images/logos/HorizontalInv.png" alt="Aristo Logo" />
+        <p>Admin Panel</p>
+      </div>
+
+      <div class="login-card">
+        <h1 class="login-title">Admin <span>Login</span></h1>
+        <p class="login-sub">Restricted access</p>
+        <div class="login-divider"></div>
+
+        <div class="login-error" id="loginError"></div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <div class="field-wrap">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              id="email"
+              placeholder="admin@aristo-eg.com"
+              autocomplete="email"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="field-wrap">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <button
+              class="pw-toggle"
+              type="button"
+              onclick="togglePw()"
+              aria-label="Toggle password"
+            >
+              <i class="fas fa-eye" id="pwIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="login-btn" id="loginBtn" onclick="doLogin()">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+
+        <p class="back-link">
+          <a href="../index.html"
+            ><i class="fas fa-arrow-left" style="margin-right: 6px"></i>Back to
+            website</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const SUPABASE_URL = "https://bhowdqqunyneealrvxim.supabase.co";
+      const SUPABASE_ANON =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJob3dkcXF1bnluZWVhbHJ2eGltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTkzNjgsImV4cCI6MjA5NjY3NTM2OH0.1yBrMcnr4W6GSPagTcDug7Yj_XyZb9DM__OGjeXFsR4";
+
+      // Redirect if already logged in
+      const stored = localStorage.getItem("aristo_session");
+      if (stored) {
+        try {
+          const s = JSON.parse(stored);
+          if (s.access_token) window.location.replace("./dashboard.html");
+        } catch (e) {}
+      }
+
+      function togglePw() {
+        const inp = document.getElementById("password");
+        const icon = document.getElementById("pwIcon");
+        if (inp.type === "password") {
+          inp.type = "text";
+          icon.className = "fas fa-eye-slash";
+        } else {
+          inp.type = "password";
+          icon.className = "fas fa-eye";
+        }
+      }
+
+      function showError(msg) {
+        const el = document.getElementById("loginError");
+        el.textContent = msg;
+        el.classList.add("show");
+      }
+      function hideError() {
+        document.getElementById("loginError").classList.remove("show");
+      }
+
+      // Allow Enter key on both fields
+      document.getElementById("email").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") doLogin();
+      });
+      document.getElementById("password").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") doLogin();
+      });
+
+      async function doLogin() {
+        hideError();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const btn = document.getElementById("loginBtn");
+
+        if (!email || !password) {
+          showError("Please enter your email and password.");
+          return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+        try {
+          const res = await fetch(
+            `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
+            {
+              method: "POST",
+              headers: {
+                apikey: SUPABASE_ANON,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password }),
+            },
+          );
+
+          const data = await res.json();
+
+          if (res.ok && data.access_token) {
+            // Store session
+            localStorage.setItem(
+              "aristo_session",
+              JSON.stringify({
+                access_token: data.access_token,
+                refresh_token: data.refresh_token,
+                expires_at: Date.now() + data.expires_in * 1000,
+              }),
+            );
+            window.location.replace("./dashboard.html");
+          } else {
+            const msg =
+              data.error_description ||
+              data.msg ||
+              "Invalid email or password.";
+            showError(msg);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+          }
+        } catch (e) {
+          showError("Network error. Please check your connection.");
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+        }
+      }
+    </script>
+  </body>
+</html>
