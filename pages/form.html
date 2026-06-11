@@ -427,13 +427,14 @@
         align-items: center;
         gap: 12px;
         margin-top: 24px;
+        flex-wrap: wrap; /* allows wrapping on small screens */
       }
 
       /* Every slot: equal flex, same height, centered content */
       .sponsor-slot {
         flex: 1; /* all 3 take equal width */
-        min-width: 0; /* prevents flex blowout */
-        height: 72px;
+        min-width: 140px; /* prevents flex blowout */
+        height: 90px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -677,14 +678,14 @@
           gap: 8px;
         }
         .sponsor-slot {
-          height: 100%;
-          padding: 8px;
+          height: 100px;
+          min-width: 120px;
         }
         .sponsor-slot img {
-          max-height: 90px;
+          max-height: 80px;
         }
         .sponsors-divider {
-          height: 36px;
+          display: none;
         }
       }
 
