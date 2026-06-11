@@ -28,7 +28,6 @@
         --orange: #ff7f00;
         --purple: #6b2d91;
         --red: #e53935;
-        --yellow: #f59e0b;
         --text-muted: rgba(255, 255, 255, 0.45);
         --text-dim: rgba(255, 255, 255, 0.7);
       }
@@ -967,10 +966,14 @@
       let accessToken = null;
 
       // ── AUTH GUARD ──────────────────────────────────────────────
+      // Hide body immediately to prevent flash/stutter before auth check
+      document.body.style.visibility = "hidden";
+
       function getSession() {
         try {
           const s = JSON.parse(localStorage.getItem("aristo_session") || "{}");
-          if (s.access_token && s.expires_at > Date.now()) return s;
+          if (s.access_token && s.expires_at && s.expires_at > Date.now())
+            return s;
           return null;
         } catch (e) {
           return null;
@@ -979,8 +982,12 @@
 
       const session = getSession();
       if (!session) {
+        // Clear any bad/stale session data before redirecting
+        localStorage.removeItem("aristo_session");
         window.location.replace("./login.html");
       } else {
+        // Valid session — reveal the page
+        document.body.style.visibility = "visible";
         accessToken = session.access_token;
         // Show admin email
         try {
@@ -1022,6 +1029,13 @@
       }
 
       // ── LOAD DATA ────────────────────────────────────────────────
+      function refreshUI() {
+        updateStats();
+        renderBreakdown();
+        renderTable();
+        document.getElementById("sidebarCount").textContent = allData.length;
+      }
+
       async function loadData() {
         try {
           const res = await sbFetch(
@@ -1029,12 +1043,9 @@
           );
           if (!res.ok) throw new Error("Fetch failed");
           allData = await res.json();
-          updateStats();
-          renderBreakdown();
-          renderTable();
+          refreshUI();
           document.getElementById("lastUpdated").textContent =
             "Last updated: " + new Date().toLocaleTimeString("en-GB");
-          document.getElementById("sidebarCount").textContent = allData.length;
         } catch (e) {
           console.error("Load error:", e);
           document.getElementById("lastUpdated").textContent =
@@ -1247,11 +1258,7 @@
           });
           if (res.ok || res.status === 204) {
             allData = allData.filter((r) => r.id !== id);
-            updateStats();
-            renderBreakdown();
-            renderTable();
-            document.getElementById("sidebarCount").textContent =
-              allData.length;
+            refreshUI();
           } else {
             alert("Delete failed. Please try again.");
           }
@@ -1281,10 +1288,7 @@
           });
           if (res.ok || res.status === 204) {
             allData = [];
-            updateStats();
-            renderBreakdown();
-            renderTable();
-            document.getElementById("sidebarCount").textContent = "0";
+            refreshUI();
           } else {
             alert("Clear failed. Please try again.");
           }

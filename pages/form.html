@@ -21,7 +21,6 @@
         --cyan-500: #009ecf;
         --cyan-200: #97e7f5;
         --green-600: #46b000;
-        --orange: #ff7f00;
         --red: #e53935;
         --max-width: 1200px;
       }
@@ -236,13 +235,13 @@
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.08);
         background: rgba(255, 255, 255, 0.02);
-        height: auto;
+        /* No fixed height — let the image dictate its own height */
       }
-
       .cert-image-wrap img {
         width: 100%;
         height: auto;
         display: block;
+        /* contain so the full certificate is always visible */
         object-fit: contain;
       }
       .cert-placeholder {
@@ -263,19 +262,9 @@
         color: rgba(70, 176, 0, 0.2);
       }
 
-      /* ── SPONSOR LOGOS BAR ── */
-      .sponsors-bar {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 16px 20px 20px;
-        display: flex;
-        align-items: stretch;
-        justify-content: center;
-        gap: 16px;
-      }
+      /* ── SPONSOR LOGOS ── */
+      /* Both slots: fixed equal height, width set per slot below */
       .sponsor-slot {
-        flex: 1;
-        min-width: 0; /* allow shrinking */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -285,28 +274,30 @@
         height: 80px;
         overflow: hidden;
         transition: border-color 0.3s;
-        padding: 8px 12px;
+        padding: 10px 14px;
+        flex-shrink: 0;
       }
       .sponsor-slot:hover {
         border-color: rgba(0, 158, 207, 0.35);
       }
+
+      /* Left slot — small square logo, give it a fixed compact width */
+      .sponsor-slot-left {
+        width: 140px;
+      }
+      /* Right slot — wide horizontal logo, give it more room */
+      .sponsor-slot-right {
+        width: 260px;
+      }
+
+      /* Images: never overflow, always centered, natural size capped */
       .sponsor-slot img {
         max-width: 100%;
-        max-height: 100%;
+        max-height: 56px;
         width: auto;
         height: auto;
         object-fit: contain;
-      }
-      .form-logo {
-        max-width: 140px;
-        max-height: 45px;
-      }
-
-      @media (max-width: 768px) {
-        .form-logo {
-          max-width: 90px;
-          max-height: 35px;
-        }
+        display: block;
       }
       .sponsor-slot.empty {
         border-style: dashed;
@@ -325,7 +316,7 @@
       }
       .sponsors-divider {
         width: 1px;
-        align-self: stretch;
+        height: 50px;
         background: rgba(255, 255, 255, 0.1);
         flex-shrink: 0;
       }
@@ -490,25 +481,21 @@
       /* Sponsors inside card */
       .card-sponsors {
         display: flex;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
         gap: 16px;
         margin-top: 24px;
       }
-      .card-sponsors .sponsor-slot {
-        height: 72px;
+      .card-sponsors .sponsor-slot-left {
+        width: 120px;
+        height: 66px;
       }
-
-      .form-logo {
-        max-width: 220px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
+      .card-sponsors .sponsor-slot-right {
+        width: 220px;
+        height: 66px;
       }
-
-      @media (max-width: 768px) {
-        .form-logo {
-          max-width: 140px;
-        }
+      .card-sponsors .sponsor-slot img {
+        max-height: 46px;
       }
 
       /* ── STATES ── */
@@ -640,35 +627,58 @@
         .cert-hero-inner {
           padding: 16px 16px 0;
         }
-
         .sponsors-bar {
           padding: 12px 16px 16px;
-          gap: 10px;
+          gap: 12px;
         }
-        /* Keep both slots equal and never collapse */
-        .sponsor-slot {
+        .sponsor-slot-left {
+          width: 110px;
           height: 68px;
-          min-width: 80px;
-          padding: 6px 10px;
         }
-        .card-sponsors .sponsor-slot {
+        .sponsor-slot-right {
+          width: 200px;
+          height: 68px;
+        }
+        .card-sponsors .sponsor-slot-left {
+          width: 100px;
           height: 60px;
-          min-width: 70px;
+        }
+        .card-sponsors .sponsor-slot-right {
+          width: 180px;
+          height: 60px;
         }
       }
       @media (max-width: 600px) {
         .form-card {
           padding: 28px 18px;
         }
-
-        .sponsor-slot {
-          height: 60px;
-          min-width: 70px;
-          padding: 5px 8px;
+        .sponsors-bar {
+          flex-direction: column;
+          gap: 10px;
+          align-items: center;
         }
-        .card-sponsors .sponsor-slot {
-          height: 54px;
-          min-width: 60px;
+        .sponsors-bar .sponsors-divider {
+          width: 60px;
+          height: 1px;
+        }
+        .sponsor-slot-left,
+        .sponsor-slot-right {
+          width: 200px;
+          height: 66px;
+        }
+        .card-sponsors {
+          flex-direction: column;
+          gap: 10px;
+          align-items: center;
+        }
+        .card-sponsors .sponsors-divider {
+          width: 60px;
+          height: 1px;
+        }
+        .card-sponsors .sponsor-slot-left,
+        .card-sponsors .sponsor-slot-right {
+          width: 180px;
+          height: 60px;
         }
       }
       @media (max-width: 480px) {
@@ -678,34 +688,47 @@
         .brand-logo {
           height: 45px;
         }
-        /* Stack logos vertically on very small screens */
-        .sponsors-bar {
-          flex-direction: column;
-          gap: 10px;
-        }
-        .sponsors-bar .sponsors-divider {
-          width: 100%;
-          height: 1px;
-          align-self: auto;
-        }
-        .sponsor-slot {
-          height: 64px;
-          min-width: unset;
-          width: 100%;
-        }
-        /* Card sponsors stay side by side but taller */
-        .card-sponsors {
-          flex-direction: column;
-          gap: 10px;
-        }
-        .card-sponsors .sponsors-divider {
-          width: 100%;
-          height: 1px;
-          align-self: auto;
-        }
-        .card-sponsors .sponsor-slot {
-          height: 60px;
-          width: 100%;
+      }
+      /* ── ADMIN BUTTON ── */
+      .admin-fab {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 900;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: rgba(10, 16, 34, 0.85);
+        border: 1px solid rgba(0, 158, 207, 0.3);
+        border-radius: 50px;
+        color: rgba(255, 255, 255, 0.55);
+        text-decoration: none;
+        font-family: Punoer, sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+      .admin-fab:hover {
+        background: rgba(0, 158, 207, 0.15);
+        border-color: var(--cyan-500);
+        color: var(--cyan-500);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      }
+      .admin-fab i {
+        font-size: 0.85rem;
+      }
+      @media (max-width: 480px) {
+        .admin-fab {
+          bottom: 18px;
+          right: 18px;
+          padding: 9px 14px;
+          font-size: 0.72rem;
         }
       }
     </style>
@@ -859,9 +882,8 @@
 
             <!-- Sponsor logos inside card, below button -->
             <div class="card-sponsors">
-              <div class="sponsor-slot">
+              <div class="sponsor-slot sponsor-slot-left">
                 <img
-                  class="form-logo"
                   src="../images/formLogo.png"
                   alt="Partner Logo"
                   onerror="
@@ -872,7 +894,7 @@
                 />
               </div>
               <div class="sponsors-divider"></div>
-              <div class="sponsor-slot">
+              <div class="sponsor-slot sponsor-slot-right">
                 <img
                   src="../images/Horizontal YOUTH-23.jpg.jpeg"
                   alt="Youth Partner Logo"
@@ -953,6 +975,11 @@
         </div>
       </div>
     </footer>
+
+    <!-- ADMIN BUTTON -->
+    <a href="./dashboard.html" class="admin-fab" title="Admin Panel">
+      <i class="fas fa-shield-alt"></i> Admin
+    </a>
 
     <script>
       // ── SUPABASE CONFIG ──────────────────────────────────────────

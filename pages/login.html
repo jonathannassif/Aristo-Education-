@@ -319,13 +319,17 @@
       const SUPABASE_ANON =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJob3dkcXF1bnluZWVhbHJ2eGltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTkzNjgsImV4cCI6MjA5NjY3NTM2OH0.1yBrMcnr4W6GSPagTcDug7Yj_XyZb9DM__OGjeXFsR4";
 
-      // Redirect if already logged in
-      const stored = localStorage.getItem("aristo_session");
-      if (stored) {
-        try {
-          const s = JSON.parse(stored);
-          if (s.access_token) window.location.replace("./dashboard.html");
-        } catch (e) {}
+      // Redirect if already logged in with a VALID (non-expired) session
+      try {
+        const s = JSON.parse(localStorage.getItem("aristo_session") || "{}");
+        if (s.access_token && s.expires_at && s.expires_at > Date.now()) {
+          window.location.replace("./dashboard.html");
+        } else if (s.access_token) {
+          // Stale session — clear it so dashboard doesn't get stuck
+          localStorage.removeItem("aristo_session");
+        }
+      } catch (e) {
+        localStorage.removeItem("aristo_session");
       }
 
       function togglePw() {
