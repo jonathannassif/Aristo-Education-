@@ -14,22 +14,20 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       :root {
         --navy-900: #0d142b;
         --white: #ffffff;
         --cyan-500: #009ecf;
         --cyan-200: #97e7f5;
         --green-600: #46b000;
+        --orange: #ff7f00;
         --red: #e53935;
         --max-width: 1200px;
       }
-
       @font-face {
         font-family: "Punoer";
         src: url("../fonts/Punoer.otf") format("opentype");
       }
-
       html {
         scroll-behavior: smooth;
       }
@@ -43,7 +41,6 @@
         color: var(--white);
         line-height: 1.5;
       }
-
       .wrap {
         max-width: var(--max-width);
         margin: 0 auto;
@@ -81,7 +78,6 @@
         height: 55px;
         display: block;
       }
-
       .nav {
         display: flex;
         gap: 40px;
@@ -112,7 +108,6 @@
       .nav a:hover::after {
         width: 100%;
       }
-
       .mobile-toggle {
         display: none;
         flex-direction: column;
@@ -132,7 +127,6 @@
       .mobile-toggle:hover .bar {
         background: var(--cyan-500);
       }
-
       .mobile-panel {
         position: fixed;
         top: 0;
@@ -224,9 +218,13 @@
         background: linear-gradient(180deg, #0d142b 0%, #1a0f3a 100%);
       }
       .cert-hero-inner {
-        max-width: 960px;
+        /*
+          Desktop: cap at 860px so it feels intentional, not accidental full-width.
+          This keeps it readable without being overwhelming.
+        */
+        max-width: 860px;
         margin: 0 auto;
-        padding: 20px 20px 0;
+        padding: 28px 20px 0;
       }
       .cert-image-wrap {
         width: 100%;
@@ -235,13 +233,15 @@
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.08);
         background: rgba(255, 255, 255, 0.02);
-        /* No fixed height — let the image dictate its own height */
+        /*
+          KEY: no fixed height, no object-fit:cover.
+          The image will show at its natural proportions — never cropped.
+        */
       }
       .cert-image-wrap img {
         width: 100%;
-        height: auto;
+        height: auto; /* always shows full image, never crops */
         display: block;
-        /* contain so the full certificate is always visible */
         object-fit: contain;
       }
       .cert-placeholder {
@@ -260,65 +260,6 @@
       .cert-placeholder i {
         font-size: 3rem;
         color: rgba(70, 176, 0, 0.2);
-      }
-
-      /* ── SPONSOR LOGOS ── */
-      /* Both slots: fixed equal height, width set per slot below */
-      .sponsor-slot {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        height: 80px;
-        overflow: hidden;
-        transition: border-color 0.3s;
-        padding: 10px 14px;
-        flex-shrink: 0;
-      }
-      .sponsor-slot:hover {
-        border-color: rgba(0, 158, 207, 0.35);
-      }
-
-      /* Left slot — small square logo, give it a fixed compact width */
-      .sponsor-slot-left {
-        width: 140px;
-      }
-      /* Right slot — wide horizontal logo, give it more room */
-      .sponsor-slot-right {
-        width: 260px;
-      }
-
-      /* Images: never overflow, always centered, natural size capped */
-      .sponsor-slot img {
-        max-width: 100%;
-        max-height: 56px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        display: block;
-      }
-      .sponsor-slot.empty {
-        border-style: dashed;
-        border-color: rgba(255, 255, 255, 0.15);
-        flex-direction: column;
-        gap: 6px;
-        color: rgba(255, 255, 255, 0.2);
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        cursor: default;
-      }
-      .sponsor-slot.empty i {
-        font-size: 1.4rem;
-        color: rgba(255, 255, 255, 0.15);
-      }
-      .sponsors-divider {
-        width: 1px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.1);
-        flex-shrink: 0;
       }
 
       /* ── COUNTER BANNER ── */
@@ -369,8 +310,6 @@
         margin: 0 auto;
         padding: 0 20px;
       }
-
-      /* ── FORM CARD ── */
       .form-card {
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.12);
@@ -445,7 +384,7 @@
         display: block;
       }
 
-      /* ── SUBMIT BUTTON ── */
+      /* ── SUBMIT ── */
       .submit-btn {
         width: 100%;
         padding: 15px;
@@ -467,7 +406,7 @@
         gap: 10px;
         margin-top: 10px;
       }
-      .submit-btn:hover {
+      .submit-btn:hover:not(:disabled) {
         background: #5acc00;
         transform: translateY(-2px);
         box-shadow: 0 12px 30px rgba(70, 176, 0, 0.5);
@@ -478,24 +417,70 @@
         transform: none;
       }
 
-      /* Sponsors inside card */
+      /* ── SPONSOR LOGOS ─────────────────────────────────────────
+         3 logos in a row. Each is EQUAL width (flex:1) so they're
+         always the same size regardless of the image inside.
+         Images are capped at max-height so tall logos don't blow up.
+      ── */
       .card-sponsors {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 16px;
+        gap: 12px;
         margin-top: 24px;
       }
-      .card-sponsors .sponsor-slot-left {
-        width: 120px;
-        height: 66px;
+
+      /* Every slot: equal flex, same height, centered content */
+      .sponsor-slot {
+        flex: 1; /* all 3 take equal width */
+        min-width: 0; /* prevents flex blowout */
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        transition: border-color 0.3s;
+        overflow: hidden;
       }
-      .card-sponsors .sponsor-slot-right {
-        width: 220px;
-        height: 66px;
+      .sponsor-slot:hover {
+        border-color: rgba(0, 158, 207, 0.35);
       }
-      .card-sponsors .sponsor-slot img {
-        max-height: 46px;
+
+      /* Image inside: never overflow the slot, always fully visible */
+      .sponsor-slot img {
+        max-width: 100%;
+        max-height: 48px; /* cap so large images don't stretch slot */
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      /* Placeholder (dashed, no image yet) */
+      .sponsor-slot.empty {
+        border-style: dashed;
+        border-color: rgba(255, 255, 255, 0.15);
+        flex-direction: column;
+        gap: 5px;
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: default;
+      }
+      .sponsor-slot.empty i {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.15);
+      }
+
+      /* Thin vertical divider between slots */
+      .sponsors-divider {
+        width: 1px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
       }
 
       /* ── STATES ── */
@@ -561,7 +546,6 @@
         color: var(--navy-900);
         transform: translateY(-2px);
       }
-
       @keyframes fadeInUp {
         from {
           opacity: 0;
@@ -608,88 +592,7 @@
         transform: translateY(-3px);
       }
 
-      /* ── RESPONSIVE ── */
-      @media (max-width: 992px) {
-        .nav {
-          display: none;
-        }
-        .mobile-toggle {
-          display: flex;
-        }
-        .brand-logo {
-          height: 50px;
-        }
-        .header-inner {
-          padding: 20px;
-        }
-      }
-      @media (max-width: 768px) {
-        .cert-hero-inner {
-          padding: 16px 16px 0;
-        }
-        .sponsors-bar {
-          padding: 12px 16px 16px;
-          gap: 12px;
-        }
-        .sponsor-slot-left {
-          width: 110px;
-          height: 68px;
-        }
-        .sponsor-slot-right {
-          width: 200px;
-          height: 68px;
-        }
-        .card-sponsors .sponsor-slot-left {
-          width: 100px;
-          height: 60px;
-        }
-        .card-sponsors .sponsor-slot-right {
-          width: 180px;
-          height: 60px;
-        }
-      }
-      @media (max-width: 600px) {
-        .form-card {
-          padding: 28px 18px;
-        }
-        .sponsors-bar {
-          flex-direction: column;
-          gap: 10px;
-          align-items: center;
-        }
-        .sponsors-bar .sponsors-divider {
-          width: 60px;
-          height: 1px;
-        }
-        .sponsor-slot-left,
-        .sponsor-slot-right {
-          width: 200px;
-          height: 66px;
-        }
-        .card-sponsors {
-          flex-direction: column;
-          gap: 10px;
-          align-items: center;
-        }
-        .card-sponsors .sponsors-divider {
-          width: 60px;
-          height: 1px;
-        }
-        .card-sponsors .sponsor-slot-left,
-        .card-sponsors .sponsor-slot-right {
-          width: 180px;
-          height: 60px;
-        }
-      }
-      @media (max-width: 480px) {
-        .mobile-link {
-          font-size: 1.7rem;
-        }
-        .brand-logo {
-          height: 45px;
-        }
-      }
-      /* ── ADMIN BUTTON ── */
+      /* ── ADMIN FAB ── */
       .admin-fab {
         position: fixed;
         bottom: 28px;
@@ -718,17 +621,76 @@
         border-color: var(--cyan-500);
         color: var(--cyan-500);
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
       }
-      .admin-fab i {
-        font-size: 0.85rem;
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 992px) {
+        .nav {
+          display: none;
+        }
+        .mobile-toggle {
+          display: flex;
+        }
+        .brand-logo {
+          height: 50px;
+        }
+        .header-inner {
+          padding: 20px;
+        }
+      }
+
+      /*
+        MOBILE certificate fix:
+        Shrink the container so it doesn't feel like a billboard.
+        The image stays fully visible (no crop) because we never set
+        a fixed height or object-fit:cover on it.
+      */
+      @media (max-width: 768px) {
+        .cert-hero-inner {
+          max-width: 480px; /* narrower on tablet */
+          padding: 20px 16px 0;
+        }
       }
       @media (max-width: 480px) {
+        .cert-hero-inner {
+          max-width: 340px; /* even narrower on phone — never crops */
+          padding: 16px 16px 0;
+        }
+        .mobile-link {
+          font-size: 1.7rem;
+        }
+        .brand-logo {
+          height: 45px;
+        }
         .admin-fab {
           bottom: 18px;
           right: 18px;
           padding: 9px 14px;
           font-size: 0.72rem;
+        }
+
+        /*
+          On very small screens, keep logos in a row but allow them
+          to shrink. They'll all stay equal size thanks to flex:1.
+        */
+        .card-sponsors {
+          gap: 8px;
+        }
+        .sponsor-slot {
+          height: 60px;
+          padding: 8px;
+        }
+        .sponsor-slot img {
+          max-height: 38px;
+        }
+        .sponsors-divider {
+          height: 36px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .form-card {
+          padding: 28px 18px;
         }
       }
     </style>
@@ -777,7 +739,7 @@
       <div class="cert-hero-inner">
         <div class="cert-image-wrap">
           <img
-            src="../images/STEMcertificate.png"
+            src="../images/Steam-pathways.jpeg"
             alt="STEM Pathways Certificate"
             onerror="
               this.parentElement.innerHTML =
@@ -880,9 +842,10 @@
               <i class="fas fa-paper-plane"></i> Submit Registration
             </button>
 
-            <!-- Sponsor logos inside card, below button -->
+            <!-- ── 3 SPONSOR LOGOS ── -->
             <div class="card-sponsors">
-              <div class="sponsor-slot sponsor-slot-left">
+              <!-- Logo 1 -->
+              <div class="sponsor-slot">
                 <img
                   src="../images/formLogo.png"
                   alt="Partner Logo"
@@ -893,8 +856,11 @@
                   "
                 />
               </div>
+
               <div class="sponsors-divider"></div>
-              <div class="sponsor-slot sponsor-slot-right">
+
+              <!-- Logo 2 -->
+              <div class="sponsor-slot">
                 <img
                   src="../images/Horizontal YOUTH-23.jpg.jpeg"
                   alt="Youth Partner Logo"
@@ -904,6 +870,12 @@
                       '<i class=\'fas fa-image\'></i><span>Logo 2</span>';
                   "
                 />
+              </div>
+
+              <div class="sponsors-divider"></div>
+
+              <div class="sponsor-slot">
+                <img src="../images/Stoon.jpeg" alt="Stoon" />
               </div>
             </div>
           </div>
@@ -976,20 +948,19 @@
       </div>
     </footer>
 
-    <!-- ADMIN BUTTON -->
+    <!-- ADMIN FAB -->
     <a href="./dashboard.html" class="admin-fab" title="Admin Panel">
       <i class="fas fa-shield-alt"></i> Admin
     </a>
 
     <script>
-      // ── SUPABASE CONFIG ──────────────────────────────────────────
       const SUPABASE_URL = "https://bhowdqqunyneealrvxim.supabase.co";
       const SUPABASE_ANON =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJob3dkcXF1bnluZWVhbHJ2eGltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwOTkzNjgsImV4cCI6MjA5NjY3NTM2OH0.1yBrMcnr4W6GSPagTcDug7Yj_XyZb9DM__OGjeXFsR4";
       const MAX = 250;
 
       async function sbFetch(path, options = {}) {
-        const res = await fetch(SUPABASE_URL + path, {
+        return fetch(SUPABASE_URL + path, {
           ...options,
           headers: {
             apikey: SUPABASE_ANON,
@@ -999,10 +970,8 @@
             ...(options.headers || {}),
           },
         });
-        return res;
       }
 
-      // ── COUNTER ─────────────────────────────────────────────────
       async function updateCounter() {
         try {
           const res = await sbFetch("/rest/v1/registrations?select=id", {
@@ -1033,7 +1002,6 @@
         document.getElementById("fullScreen").classList.add("show");
       }
 
-      // ── VALIDATION ──────────────────────────────────────────────
       function clearErrors() {
         document
           .querySelectorAll(".field-error")
@@ -1077,30 +1045,25 @@
         return ok;
       }
 
-      // ── SUBMIT ──────────────────────────────────────────────────
       async function submitForm() {
         if (!validate()) return;
-
         const btn = document.getElementById("submitBtn");
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
-        // Live capacity check
         const currentCount = await updateCounter();
         if (currentCount >= MAX) return;
-
-        const payload = {
-          name: document.getElementById("name").value.trim(),
-          phone: document.getElementById("phone").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          national_id: document.getElementById("nationalId").value.trim(),
-          title: document.getElementById("title").value.trim(),
-        };
 
         try {
           const res = await sbFetch("/rest/v1/registrations", {
             method: "POST",
-            body: JSON.stringify(payload),
+            body: JSON.stringify({
+              name: document.getElementById("name").value.trim(),
+              phone: document.getElementById("phone").value.trim(),
+              email: document.getElementById("email").value.trim(),
+              national_id: document.getElementById("nationalId").value.trim(),
+              title: document.getElementById("title").value.trim(),
+            }),
           });
 
           if (res.ok || res.status === 201) {
@@ -1113,7 +1076,6 @@
             });
           } else {
             const err = await res.json().catch(() => ({}));
-            // Duplicate national ID
             if (err.code === "23505") {
               showError("err-nationalId", "nationalId");
               document.getElementById("err-nationalId").textContent =
@@ -1134,7 +1096,7 @@
         }
       }
 
-      // ── MOBILE MENU ─────────────────────────────────────────────
+      // Mobile menu
       const openBtn = document.querySelector(".mobile-toggle");
       const panel = document.querySelector(".mobile-panel");
       const closeBtn = document.querySelector(".mobile-close");
@@ -1153,7 +1115,6 @@
         document.body.style.overflow = "";
       });
 
-      // ── INIT ────────────────────────────────────────────────────
       updateCounter();
     </script>
   </body>
