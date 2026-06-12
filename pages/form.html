@@ -8,6 +8,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
       * {
         margin: 0;
@@ -15,13 +19,21 @@
         box-sizing: border-box;
       }
       :root {
-        --navy-900: #0d142b;
+        --navy-900: #070c1e;
+        --navy-850: #0d142b;
         --white: #ffffff;
         --cyan-500: #009ecf;
         --cyan-200: #97e7f5;
         --green-600: #46b000;
         --orange: #ff7f00;
         --red: #e53935;
+        --slate-100: #f1f5f9;
+        --slate-200: #e2e8f0;
+        --slate-300: #cbd5e1;
+        --slate-400: #94a3b8;
+        --slate-500: #64748b;
+        --slate-800: #1e293b;
+        --primary-blue: #3e5be2;
         --max-width: 1200px;
       }
       @font-face {
@@ -36,10 +48,11 @@
         overflow-x: hidden;
       }
       body {
-        font-family: Punoer, sans-serif;
-        background: var(--navy-900);
-        color: var(--white);
+        font-family: "Punoer", "Plus Jakarta Sans", sans-serif;
+        background: #f4f6fc;
+        color: var(--slate-800);
         line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
       }
       .wrap {
         max-width: var(--max-width);
@@ -53,17 +66,16 @@
         top: 0;
         left: 0;
         right: 0;
-        background: rgba(5, 20, 52, 0.98);
-        backdrop-filter: blur(10px);
+        background: #091124;
         z-index: 1000;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       }
       .header-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 25px 20px;
+        padding: 20px 20px;
         max-width: var(--max-width);
         margin: 0 auto;
       }
@@ -72,22 +84,60 @@
         transition: transform 0.3s;
       }
       .logo-link:hover {
-        transform: scale(1.05);
+        transform: scale(1.03);
       }
       .brand-logo {
-        height: 55px;
+        height: 44px;
         display: block;
+      }
+      .logo-text-fallback {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: white;
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-text-fallback span {
+        color: #00f0ff;
+      }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .icon-action-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+      }
+      .icon-action-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
       }
       .nav {
         display: flex;
-        gap: 40px;
+        gap: 30px;
       }
       .nav a {
-        color: #d7e5f2;
+        color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         text-transform: uppercase;
-        font-weight: 600;
-        font-size: 1.1rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
         padding: 8px 0;
         position: relative;
         transition: color 0.3s;
@@ -103,7 +153,7 @@
         transition: width 0.3s;
       }
       .nav a:hover {
-        color: var(--cyan-500);
+        color: white;
       }
       .nav a:hover::after {
         width: 100%;
@@ -118,14 +168,11 @@
         gap: 5px;
       }
       .bar {
-        width: 28px;
+        width: 24px;
         height: 3px;
         background: white;
         border-radius: 3px;
         transition: all 0.4s;
-      }
-      .mobile-toggle:hover .bar {
-        background: var(--cyan-500);
       }
       .mobile-panel {
         position: fixed;
@@ -133,7 +180,7 @@
         left: 0;
         width: 100%;
         height: 100vh;
-        background: rgba(5, 20, 52, 0.99);
+        background: rgba(9, 17, 36, 0.99);
         backdrop-filter: blur(15px);
         display: flex;
         flex-direction: column;
@@ -153,10 +200,10 @@
         background: rgba(255, 255, 255, 0.1);
         border: none;
         color: white;
-        font-size: 3rem;
+        font-size: 2.2rem;
         cursor: pointer;
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -170,18 +217,19 @@
       .mobile-nav {
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 25px;
         text-align: center;
       }
       .mobile-link {
         color: white;
-        font-size: 2rem;
-        font-weight: 700;
+        font-size: 1.6rem;
+        font-weight: 800;
         text-decoration: none;
         text-transform: uppercase;
+        letter-spacing: 1.5px;
         opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
       }
       .mobile-panel.open .mobile-link {
         opacity: 1;
@@ -215,168 +263,376 @@
       /* ── CERTIFICATE HERO ── */
       .cert-hero {
         padding-top: 105px;
-        background: linear-gradient(180deg, #0d142b 0%, #1a0f3a 100%);
+        background: #f4f6fc;
       }
       .cert-hero-inner {
-        /*
-          Desktop: cap at 860px so it feels intentional, not accidental full-width.
-          This keeps it readable without being overwhelming.
-        */
-        max-width: 860px;
+        max-width: 900px;
         margin: 0 auto;
-        padding: 28px 20px 0;
+        padding: 30px 20px 0;
       }
       .cert-image-wrap {
         width: 100%;
-        border-radius: 16px;
+        border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(255, 255, 255, 0.02);
-        /*
-          KEY: no fixed height, no object-fit:cover.
-          The image will show at its natural proportions — never cropped.
-        */
+        box-shadow: 0 20px 45px rgba(13, 20, 43, 0.12);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        background: #0d142b;
       }
       .cert-image-wrap img {
         width: 100%;
-        height: auto; /* always shows full image, never crops */
+        height: auto;
         display: block;
         object-fit: contain;
       }
+
+      /* Glowing High-Fidelity Standalone Fallback for the Steam-pathways Banner */
       .cert-placeholder {
         width: 100%;
-        height: 200px;
+        min-height: 280px;
+        background: linear-gradient(
+          135deg,
+          #120a2e 0%,
+          #030825 55%,
+          #1c0847 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 40px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+      .cert-placeholder::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(
+          circle,
+          rgba(96, 37, 230, 0.35) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .cert-placeholder-left {
+        flex: 1;
+        max-width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tech-mesh-icon {
+        font-size: 6.5rem;
+        color: rgba(0, 240, 255, 0.15);
+        animation: floatMesh 4s ease-in-out infinite alternate;
+        filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.1));
+      }
+      @keyframes floatMesh {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-15px) rotate(8deg);
+        }
+      }
+      .cert-placeholder-right {
+        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        color: rgba(255, 255, 255, 0.25);
-        font-size: 0.9rem;
+        text-align: center;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        padding-left: 20px;
+      }
+      .glowing-ring-container {
+        position: relative;
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+      }
+      .glowing-ring-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .ring-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.05);
+        stroke-width: 4;
+      }
+      .ring-flow {
+        fill: none;
+        stroke: url(#ringGrad);
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-dasharray: 502;
+        stroke-dashoffset: 80;
+        animation: spinRing 20s linear infinite;
+        transform-origin: center;
+      }
+      @keyframes spinRing {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .steam-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: white;
         letter-spacing: 1px;
+        margin-bottom: 2px;
         text-transform: uppercase;
       }
-      .cert-placeholder i {
-        font-size: 3rem;
-        color: rgba(70, 176, 0, 0.2);
+      .steam-pathways-sub {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.8);
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+      .vate-brand {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        justify-content: center;
+        margin-bottom: 4px;
+      }
+      .alpha-symbol {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #00e5ff;
+        font-family: "Space Grotesk", sans-serif;
+      }
+      .vate-text {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 1.5px;
+      }
+      .brand-year {
+        font-size: 0.72rem;
+        font-family: monospace;
+        letter-spacing: 3px;
+        color: rgba(255, 255, 255, 0.5);
       }
 
-      /* ── COUNTER BANNER ── */
-      .counter-banner {
-        background: linear-gradient(
-          90deg,
-          rgba(0, 158, 207, 0.15),
-          rgba(70, 176, 0, 0.15)
-        );
-        border-top: 1px solid rgba(0, 158, 207, 0.15);
-        border-bottom: 1px solid rgba(0, 158, 207, 0.2);
-        padding: 14px 20px;
-        text-align: center;
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.9);
+      /* ── COUNTER BADGE CARD ── */
+      .counter-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 20px 0;
       }
-      .counter-banner strong {
-        color: var(--cyan-500);
-        font-size: 1.15rem;
+      .counter-banner-card {
+        background: #ffffff;
+        border: 1px solid #e8edf9;
+        border-radius: 20px;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 10px 30px rgba(13, 20, 43, 0.04);
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .counter-icon-circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ebf0fe;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+      }
+      .counter-text-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .counter-number-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .counter-huge-number {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+        line-height: 1;
+      }
+      .counter-labels-col {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+      }
+      .counter-title-label {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #070c1e;
+        letter-spacing: 1px;
+      }
+      .counter-subtitle-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--slate-400);
+      }
+
+      /* ── SUBTLE PROGRESS BAR ── */
+      .progress-container {
+        max-width: 500px;
+        margin: 8px auto 0;
+        padding: 0 4px;
       }
       .counter-bar-wrap {
-        max-width: 400px;
-        margin: 8px auto 0;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.1);
+        width: 100%;
+        height: 4px;
+        background: #e2e8f0;
         border-radius: 10px;
         overflow: hidden;
       }
       .counter-bar {
         height: 100%;
         border-radius: 10px;
-        background: linear-gradient(90deg, var(--cyan-500), var(--green-600));
-        transition: width 0.5s ease;
+        background: linear-gradient(90deg, #6c2cf5, #0099ff);
+        transition: width 0.8s cubic-bezier(0.1, 0.8, 0.2, 1);
       }
 
       /* ── FORM SECTION ── */
       .form-section {
-        padding: 60px 0 100px;
-        background: linear-gradient(
-          180deg,
-          #1a0f3a 0%,
-          #1e1248 40%,
-          var(--navy-900) 100%
-        );
+        padding: 30px 0 80px;
+        background: #f4f6fc;
       }
       .form-wrapper {
-        max-width: 580px;
+        max-width: 900px;
         margin: 0 auto;
         padding: 0 20px;
       }
+
+      /* Formal White Elegant Layout Content */
+      .form-header {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+      .main-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #0c152a;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+      }
+      .subtitle {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #5d6783;
+        max-width: 520px;
+        margin: 0 auto;
+        line-height: 1.5;
+      }
+
       .form-card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 24px;
-        padding: 42px 40px;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
-        backdrop-filter: blur(12px);
+        background: #ffffff;
+        border: 1px solid #e8edf9;
+        border-radius: 32px;
+        padding: 40px 48px;
+        box-shadow: 0 25px 55px rgba(13, 20, 43, 0.05);
+        max-width: 560px;
+        margin: 0 auto;
       }
 
       /* ── FORM GROUPS ── */
+      .form-group-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
       .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 24px;
+        text-align: left;
       }
       label {
-        display: block;
-        font-family: Punoer, sans-serif;
-        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.8rem;
         font-weight: 700;
-        color: var(--cyan-200);
+        color: #3b4256;
         margin-bottom: 8px;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
+      }
+      label i {
+        color: var(--primary-blue);
+        font-size: 0.85rem;
+        width: 14px;
+        text-align: center;
       }
       label .req {
-        color: #ff6b6b;
-        margin-left: 3px;
+        color: #f43f5e;
+        margin-left: 2px;
       }
       .input-wrap {
         position: relative;
       }
-      .input-wrap i {
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(255, 255, 255, 0.35);
-        font-size: 1rem;
-        pointer-events: none;
-      }
-      input {
+      input,
+      select {
         width: 100%;
-        padding: 13px 18px 13px 46px;
-        border: 2px solid rgba(0, 158, 207, 0.25);
+        padding: 14px 18px;
+        border: 1.5px solid #e2e8f0;
         border-radius: 12px;
-        background: rgba(13, 20, 43, 0.7);
-        color: var(--white);
-        font-family: Punoer, sans-serif;
-        font-size: 0.95rem;
-        transition: all 0.3s;
+        background: #ffffff;
+        color: var(--navy-900);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
+        -webkit-appearance: none;
       }
-      input:focus {
+      select {
+        background-image: url("data:image/svg+xml;utf8,<svg fill='%2364748b' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+      }
+      input:focus,
+      select:focus {
         outline: none;
-        border-color: var(--cyan-500);
-        background: rgba(13, 20, 43, 0.9);
-        box-shadow: 0 0 0 4px rgba(0, 158, 207, 0.12);
+        border-color: var(--primary-blue);
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(62, 91, 226, 0.1);
       }
       input::placeholder {
-        color: rgba(255, 255, 255, 0.3);
-        font-family: Punoer, sans-serif;
+        color: var(--slate-400);
+        font-weight: 400;
       }
-      input.error {
-        border-color: var(--red);
+      input.error,
+      select.error {
+        border-color: #f43f5e;
+        background-color: #fffafb;
       }
       .field-error {
-        font-family: Punoer, sans-serif;
-        font-size: 0.82rem;
-        color: #ff6b6b;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #f43f5e;
         margin-top: 6px;
         display: none;
       }
@@ -384,32 +640,35 @@
         display: block;
       }
 
-      /* ── SUBMIT ── */
+      /* ── SUBMIT BUTTON ── */
       .submit-btn {
         width: 100%;
-        padding: 15px;
-        background: var(--green-600);
+        padding: 16px;
+        background: linear-gradient(90deg, #6c2cf5 0%, #0099ff 100%);
         color: white;
         border: none;
-        border-radius: 50px;
-        font-family: Punoer, sans-serif;
-        font-size: 1.05rem;
+        border-radius: 16px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.95rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 8px 25px rgba(70, 176, 0, 0.35);
+        transition: all 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
+        box-shadow: 0 10px 25px rgba(108, 44, 245, 0.25);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
         margin-top: 10px;
       }
       .submit-btn:hover:not(:disabled) {
-        background: #5acc00;
         transform: translateY(-2px);
-        box-shadow: 0 12px 30px rgba(70, 176, 0, 0.5);
+        box-shadow: 0 14px 30px rgba(108, 44, 245, 0.35);
+        filter: brightness(1.08);
+      }
+      .submit-btn:active:not(:disabled) {
+        transform: translateY(0);
       }
       .submit-btn:disabled {
         opacity: 0.6;
@@ -417,70 +676,83 @@
         transform: none;
       }
 
-      /* ── SPONSOR LOGOS ─────────────────────────────────────────
-         3 logos in a row. Each is EQUAL width (flex:1) so they're
-         always the same size regardless of the image inside.
-         Images are capped at max-height so tall logos don't blow up.
-      ── */
+      /* ── SPONSOR LOGOS GORGEOUS GRID ── */
       .card-sponsors {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 24px;
-        flex-wrap: wrap; /* allows wrapping on small screens */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 25px;
       }
 
-      /* Every slot: equal flex, same height, centered content */
+      /* 5th slot spans both columns, centered, half-wide */
+      .sponsor-slot:last-child {
+        grid-column: 1 / -1;
+        max-width: 60%;
+        margin: 0 auto;
+        width: 100%;
+      }
+
       .sponsor-slot {
-        flex: 1; /* all 3 take equal width */
-        min-width: 140px; /* prevents flex blowout */
-        height: 90px;
+        height: 82px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 14px;
+        background: #ffffff;
+        border: 1px solid #e8edf9;
         border-radius: 14px;
-        transition: border-color 0.3s;
+        transition: all 0.3s;
         overflow: hidden;
+        box-shadow: 0 4px 10px rgba(13, 20, 43, 0.02);
       }
       .sponsor-slot:hover {
-        border-color: rgba(0, 158, 207, 0.35);
+        border-color: var(--primary-blue);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(13, 20, 43, 0.05);
       }
-
-      /* Image inside: never overflow the slot, always fully visible */
       .sponsor-slot img {
         max-width: 100%;
-        max-height: 60px; /* cap so large images don't stretch slot */
+        max-height: 52px;
         width: auto;
         height: auto;
         object-fit: contain;
         display: block;
       }
-
-      /* Placeholder (dashed, no image yet) */
       .sponsor-slot.empty {
         border-style: dashed;
-        border-color: rgba(255, 255, 255, 0.15);
+        border-color: #cbd5e1;
+        background: #f8fafc;
         flex-direction: column;
-        gap: 5px;
-        color: rgba(255, 255, 255, 0.2);
-        font-size: 0.7rem;
-        letter-spacing: 1px;
+        gap: 4px;
+        color: var(--slate-400);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
         text-transform: uppercase;
         cursor: default;
       }
       .sponsor-slot.empty i {
-        font-size: 1.3rem;
-        color: rgba(255, 255, 255, 0.15);
+        font-size: 1.1rem;
+        color: var(--slate-300);
       }
 
-      /* Thin vertical divider between slots */
-      .sponsors-divider {
-        width: 1px;
-        height: 44px;
-        background: rgba(255, 255, 255, 0.1);
+      /* ── POLICY STATEMENT ── */
+      .form-policy-text {
+        font-size: 0.75rem;
+        line-height: 1.6;
+        color: #64748b;
+        margin-top: 24px;
+        text-align: center;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 10px;
+      }
+      .form-policy-text i {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin-top: 2px;
         flex-shrink: 0;
       }
 
@@ -489,7 +761,7 @@
       .success-screen {
         display: none;
         text-align: center;
-        padding: 20px 0;
+        padding: 30px 10px;
         animation: fadeInUp 0.5s ease-out;
       }
       .full-screen.show,
@@ -497,60 +769,66 @@
         display: block;
       }
       .full-screen > i {
-        font-size: 4.5rem;
-        color: var(--orange);
+        font-size: 4rem;
+        color: #f59e0b;
         display: block;
         margin-bottom: 20px;
       }
       .full-screen h2 {
-        font-family: Punoer, sans-serif;
-        font-size: 2rem;
-        color: var(--orange);
-        margin-bottom: 14px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.8rem;
+        color: #0c152a;
+        margin-bottom: 12px;
+        font-weight: 800;
       }
       .full-screen p,
       .success-screen p {
-        font-family: Punoer, sans-serif;
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.8;
-        max-width: 420px;
+        font-size: 0.95rem;
+        color: #5d6783;
+        line-height: 1.7;
+        max-width: 400px;
         margin: 0 auto 28px;
       }
       .success-screen i.check {
-        font-size: 4.5rem;
-        color: var(--green-600);
+        font-size: 4.2rem;
+        color: #10b981;
         display: block;
         margin-bottom: 20px;
       }
       .success-screen h2 {
-        font-family: Punoer, sans-serif;
-        font-size: 2rem;
-        color: var(--green-600);
-        margin-bottom: 14px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.8rem;
+        color: #10b981;
+        margin-bottom: 12px;
+        font-weight: 800;
       }
       .back-btn {
-        display: inline-block;
-        padding: 14px 40px;
-        background: var(--cyan-500);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 30px;
+        background: var(--primary-blue);
         color: white;
         text-decoration: none;
         border-radius: 50px;
-        font-family: Punoer, sans-serif;
+        font-family: "Space Grotesk", sans-serif;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.9rem;
         transition: all 0.3s;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 6px 18px rgba(62, 91, 226, 0.2);
       }
       .back-btn:hover {
-        background: var(--cyan-200);
-        color: var(--navy-900);
         transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(62, 91, 226, 0.3);
+        filter: brightness(1.05);
       }
       @keyframes fadeInUp {
         from {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(20px);
         }
         to {
           opacity: 1;
@@ -561,8 +839,8 @@
       /* ── FOOTER ── */
       .site-footer {
         padding: 40px 0;
-        background: #081022;
-        border-top: 2px solid rgba(0, 158, 207, 0.2);
+        background: #091124;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
       .footer-inner {
         display: flex;
@@ -572,25 +850,38 @@
         gap: 20px;
       }
       .footer-logo {
-        height: 40px;
+        height: 32px;
         transition: transform 0.3s;
       }
       .footer-logo:hover {
         transform: scale(1.05);
       }
+      .site-footer p {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 500;
+      }
       .social {
         display: flex;
-        gap: 15px;
+        gap: 12px;
       }
       .social a {
-        color: var(--cyan-500);
-        text-decoration: none;
-        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.05);
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
         transition: all 0.3s;
+        text-decoration: none;
       }
       .social a:hover {
-        color: var(--cyan-200);
-        transform: translateY(-3px);
+        color: white;
+        background: var(--primary-blue);
+        transform: translateY(-2px);
       }
 
       /* ── ADMIN FAB ── */
@@ -603,24 +894,23 @@
         align-items: center;
         gap: 8px;
         padding: 10px 18px;
-        background: rgba(10, 16, 34, 0.85);
-        border: 1px solid rgba(0, 158, 207, 0.3);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         border-radius: 50px;
-        color: rgba(255, 255, 255, 0.55);
+        color: #0f172a;
         text-decoration: none;
-        font-family: Punoer, sans-serif;
-        font-size: 0.78rem;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        backdrop-filter: blur(10px);
+        letter-spacing: 1px;
         transition: all 0.3s;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 15px rgba(13, 20, 43, 0.08);
       }
       .admin-fab:hover {
-        background: rgba(0, 158, 207, 0.15);
-        border-color: var(--cyan-500);
-        color: var(--cyan-500);
+        background: #0f172a;
+        border-color: #0f172a;
+        color: #ffffff;
         transform: translateY(-2px);
       }
 
@@ -633,65 +923,82 @@
           display: flex;
         }
         .brand-logo {
-          height: 50px;
+          height: 36px;
         }
         .header-inner {
-          padding: 20px;
+          padding: 16px 20px;
         }
       }
-
-      /*
-        MOBILE certificate fix:
-        Shrink the container so it doesn't feel like a billboard.
-        The image stays fully visible (no crop) because we never set
-        a fixed height or object-fit:cover on it.
-      */
       @media (max-width: 768px) {
         .cert-hero-inner {
-          max-width: 480px; /* narrower on tablet */
+          max-width: 100%;
           padding: 20px 16px 0;
+        }
+        .cert-placeholder {
+          flex-direction: column-reverse;
+          gap: 30px;
+          padding: 30px 20px;
+          min-height: auto;
+          text-align: center;
+        }
+        .cert-placeholder-left {
+          max-width: 100%;
+        }
+        .tech-mesh-icon {
+          font-size: 5rem;
+        }
+        .cert-placeholder-right {
+          border-left: none;
+          padding-left: 0;
+        }
+        .glowing-ring-container {
+          width: 150px;
+          height: 150px;
+        }
+      }
+      @media (max-width: 600px) {
+        .form-card {
+          padding: 30px 24px;
+          border-radius: 24px;
+        }
+        .main-title {
+          font-size: 1.8rem;
+        }
+        .submit-btn {
+          font-size: 0.88rem;
+          padding: 14px;
         }
       }
       @media (max-width: 480px) {
-        .cert-hero-inner {
-          max-width: 340px; /* even narrower on phone — never crops */
-          padding: 16px 16px 0;
-        }
-        .mobile-link {
-          font-size: 1.7rem;
-        }
         .brand-logo {
-          height: 45px;
+          height: 32px;
         }
-        .admin-fab {
-          bottom: 18px;
-          right: 18px;
-          padding: 9px 14px;
-          font-size: 0.72rem;
+        .counter-banner-card {
+          padding: 12px 16px;
+          gap: 12px;
         }
-
-        /*
-          On very small screens, keep logos in a row but allow them
-          to shrink. They'll all stay equal size thanks to flex:1.
-        */
-        .card-sponsors {
-          gap: 8px;
+        .counter-icon-circle {
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
+        }
+        .counter-huge-number {
+          font-size: 1.8rem;
+        }
+        .counter-title-label {
+          font-size: 0.8rem;
+        }
+        .counter-subtitle-label {
+          font-size: 0.65rem;
         }
         .sponsor-slot {
-          height: 100px;
-          min-width: 120px;
+          height: 70px;
         }
         .sponsor-slot img {
-          max-height: 80px;
+          max-height: 44px;
         }
-        .sponsors-divider {
-          display: none;
-        }
-      }
-
-      @media (max-width: 600px) {
-        .form-card {
-          padding: 28px 18px;
+        .sponsor-slot:last-child {
+          max-width: 80%;
         }
       }
     </style>
@@ -701,11 +1008,14 @@
     <header class="site-header">
       <div class="wrap header-inner">
         <a href="../index.html#home" class="logo-link" aria-label="Aristo Home">
-          <img
-            src="../images/logos/HorizontalInv.png"
-            alt="Aristo Logo"
-            class="brand-logo"
-          />
+          <picture class="brand-logo-pic">
+            <img
+              src="../images/logos/HorizontalInv.png"
+              alt="Aristo Logo"
+              class="brand-logo"
+              onerror="showDefaultLogo(this)"
+            />
+          </picture>
         </a>
         <nav class="nav">
           <a href="../index.html#home">Home</a>
@@ -716,13 +1026,37 @@
           <a href="./form.html">Form</a>
           <a href="./contact.html">Contact</a>
         </nav>
-        <button class="mobile-toggle" aria-label="Open menu">
-          <span class="bar"></span><span class="bar"></span
-          ><span class="bar"></span>
-        </button>
+
+        <div class="header-actions">
+          <!-- Download Circle Button as seen in the top right of Aristo design -->
+          <a
+            href="#"
+            class="icon-action-btn"
+            title="Download Brochure"
+            aria-label="Download Document"
+          >
+            <i class="fas fa-arrow-down"></i>
+          </a>
+
+          <button
+            class="mobile-toggle"
+            aria-label="Open menu"
+            onclick="toggleMobileMenu()"
+          >
+            <span class="bar" style="margin-bottom: 4px"></span>
+            <span class="bar" style="margin-bottom: 4px"></span>
+            <span class="bar"></span>
+          </button>
+        </div>
       </div>
       <div class="mobile-panel" id="mobileMenu">
-        <button class="mobile-close" aria-label="Close menu">×</button>
+        <button
+          class="mobile-close"
+          aria-label="Close menu"
+          onclick="toggleMobileMenu()"
+        >
+          ×
+        </button>
         <nav class="mobile-nav">
           <a href="../index.html#home" class="mobile-link">Home</a>
           <a href="../index.html#who-we-are" class="mobile-link">Our Vision</a>
@@ -738,37 +1072,62 @@
     <!-- CERTIFICATE HERO -->
     <div class="cert-hero">
       <div class="cert-hero-inner">
-        <div class="cert-image-wrap">
+        <div class="cert-image-wrap" id="certImageContainer">
           <img
-            src="../images/Steam-pathways.jpeg"
+            src="../images/steaambanner.jpg"
             alt="STEM Pathways Certificate"
-            onerror="
-              this.parentElement.innerHTML =
-                '<div class=\'cert-placeholder\'><i class=\'fas fa-certificate\'></i><span>Certificate Image</span></div>'
-            "
+            onerror="triggerCertificateFallback(this)"
           />
         </div>
       </div>
     </div>
 
-    <!-- COUNTER BANNER -->
-    <div class="counter-banner">
-      <div><strong id="spotsLeft">250</strong> spots remaining out of 250</div>
-      <div class="counter-bar-wrap">
-        <div class="counter-bar" id="counterBar" style="width: 0%"></div>
+    <!-- COUNTER BADGE CARD -->
+    <div class="counter-container">
+      <div class="counter-banner-card">
+        <div class="counter-icon-circle">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="counter-text-group">
+          <div class="counter-number-row">
+            <span class="counter-huge-number" id="spotsLeft">250</span>
+            <div class="counter-labels-col">
+              <span class="counter-title-label">AVAILABLE SEATS</span>
+              <span class="counter-subtitle-label"
+                >Limited Seats Available</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBTLE PROGRESS BAR -->
+      <div class="progress-container">
+        <div class="counter-bar-wrap">
+          <div class="counter-bar" id="counterBar" style="width: 0%"></div>
+        </div>
       </div>
     </div>
 
     <!-- FORM SECTION -->
     <section class="form-section">
       <div class="form-wrapper">
+        <div class="form-header">
+          <h1 class="main-title">Register Your Interest</h1>
+          <p class="subtitle">
+            Complete the form below to secure your place in the STEAM Pathways
+            αVate 2026 program.
+          </p>
+        </div>
+
         <div class="form-card">
-          <!-- FORM -->
+          <!-- FORM CONTENT -->
           <div id="formContent">
             <div class="form-group">
-              <label for="name">Full Name <span class="req">*</span></label>
+              <label for="name">
+                <i class="fas fa-user"></i> Full Name <span class="req">*</span>
+              </label>
               <div class="input-wrap">
-                <i class="fas fa-user"></i>
                 <input
                   type="text"
                   id="name"
@@ -781,9 +1140,11 @@
             </div>
 
             <div class="form-group">
-              <label for="phone">Phone Number <span class="req">*</span></label>
+              <label for="phone">
+                <i class="fas fa-phone-alt"></i> Phone Number
+                <span class="req">*</span>
+              </label>
               <div class="input-wrap">
-                <i class="fas fa-phone"></i>
                 <input type="tel" id="phone" placeholder="+20 1XX XXX XXXX" />
               </div>
               <p class="field-error" id="err-phone">
@@ -792,15 +1153,15 @@
             </div>
 
             <div class="form-group">
-              <label for="email"
-                >Email Address <span class="req">*</span></label
-              >
+              <label for="email">
+                <i class="fas fa-envelope"></i> Email Address
+                <span class="req">*</span>
+              </label>
               <div class="input-wrap">
-                <i class="fas fa-envelope"></i>
                 <input
                   type="email"
                   id="email"
-                  placeholder="example@email.com"
+                  placeholder="Enter your email address"
                 />
               </div>
               <p class="field-error" id="err-email">
@@ -808,76 +1169,105 @@
               </p>
             </div>
 
-            <div class="form-group">
-              <label for="nationalId"
-                >National ID <span class="req">*</span></label
-              >
-              <div class="input-wrap">
-                <i class="fas fa-id-card"></i>
-                <input
-                  type="text"
-                  id="nationalId"
-                  placeholder="14-digit national ID"
-                  maxlength="14"
-                />
+            <!-- TWO FIELDS SIDE BY SIDE ON DESKTOP -->
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="nationalId">
+                  <i class="fas fa-id-card"></i> National ID
+                  <span class="req">*</span>
+                </label>
+                <div class="input-wrap">
+                  <input
+                    type="text"
+                    id="nationalId"
+                    placeholder="14-digit National ID"
+                    maxlength="14"
+                  />
+                </div>
+                <p class="field-error" id="err-nationalId">
+                  Please enter a valid 14-digit national ID.
+                </p>
               </div>
-              <p class="field-error" id="err-nationalId">
-                Please enter a valid 14-digit national ID.
-              </p>
-            </div>
 
-            <div class="form-group">
-              <label for="title">Title <span class="req">*</span></label>
-              <div class="input-wrap">
-                <i class="fas fa-briefcase"></i>
-                <input
-                  type="text"
-                  id="title"
-                  placeholder="e.g. Student, Teacher, School Administrator"
-                />
+              <div class="form-group">
+                <label for="title">
+                  <i class="fas fa-briefcase"></i> Title
+                  <span class="req">*</span>
+                </label>
+                <div class="input-wrap">
+                  <input
+                    type="text"
+                    id="title"
+                    placeholder="E.g. Student, Teacher, School"
+                  />
+                </div>
+                <p class="field-error" id="err-title">
+                  Please enter your title.
+                </p>
               </div>
-              <p class="field-error" id="err-title">Please enter your title.</p>
             </div>
 
             <button class="submit-btn" id="submitBtn" onclick="submitForm()">
-              <i class="fas fa-paper-plane"></i> Submit Registration
+              <span>Submit Registration</span>
+              <i class="fas fa-arrow-right"></i>
             </button>
 
-            <!-- ── 3 SPONSOR LOGOS ── -->
+            <!-- ── 5 SPONSOR LOGOS — 2 / 2 / 1 DESIGN MODEL ── -->
             <div class="card-sponsors">
-              <!-- Logo 1 -->
+              <!-- Row 1 — Logo 1 -->
               <div class="sponsor-slot">
                 <img
-                  src="../images/sweedyy.jpeg"
+                  src="../images/sweedyy-removebg-preview.png"
                   alt="Partner Logo"
-                  onerror="
-                    this.parentElement.classList.add('empty');
-                    this.parentElement.innerHTML =
-                      '<i class=\'fas fa-image\'></i><span>Logo 1</span>';
-                  "
+                  onerror="handleSponsorError(this, 'SU TECH STEM Academy')"
                 />
               </div>
 
-              <div class="sponsors-divider"></div>
-
-              <!-- Logo 2 -->
+              <!-- Row 1 — Logo 2 -->
               <div class="sponsor-slot">
                 <img
-                  src="../images/Horizontal YOUTH-23.jpg.jpeg"
+                  src="../images/Horizontal_YOUTH-23.jpg-removebg-preview.png"
                   alt="Youth Partner Logo"
-                  onerror="
-                    this.parentElement.classList.add('empty');
-                    this.parentElement.innerHTML =
-                      '<i class=\'fas fa-image\'></i><span>Logo 2</span>';
-                  "
+                  onerror="handleSponsorError(this, 'Aspire Youth')"
                 />
               </div>
 
-              <div class="sponsors-divider"></div>
-
+              <!-- Row 2 — Logo 3 -->
               <div class="sponsor-slot">
-                <img src="../images/Stoon.jpeg" alt="Stoon" />
+                <img
+                  src="../images/Stoon-removebg-preview.png"
+                  alt="Stoon"
+                  onerror="handleSponsorError(this, 'Scope Education')"
+                />
               </div>
+
+              <!-- Row 2 — Logo 4 placeholder -->
+              <div class="sponsor-slot">
+                <img
+                  src="../images/stemacrreditedlogo-removebg-preview.png"
+                  alt="Sponsor Name"
+                  onerror="handleSponsorError(this, 'Code Avengers')"
+                />
+              </div>
+
+              <!-- Row 3 — Logo 5 placeholder (spans full width, half-wide, centered) -->
+              <div class="sponsor-slot">
+                <img
+                  src="../images/atmwhitebg.png"
+                  alt="Sponsor Name"
+                  onerror="handleSponsorError(this, 'Texas A&M University')"
+                />
+              </div>
+            </div>
+
+            <!-- PRIVACY POLICY AGREEMENT SUBMISSION DISCLOSURE -->
+            <div class="form-policy-text">
+              <i class="fas fa-lock"></i>
+              <span
+                >By submitting this form, you agree to be contacted by the
+                Aristo Education team regarding educational programs, events,
+                and partnership opportunities.</span
+              >
             </div>
           </div>
 
@@ -890,10 +1280,9 @@
               <strong>250 participants</strong>. Registration is now closed.
               Please contact us for more information.
             </p>
-            <a href="./contact.html" class="back-btn"
-              ><i class="fas fa-envelope" style="margin-right: 8px"></i>Contact
-              Us</a
-            >
+            <a href="./contact.html" class="back-btn">
+              <i class="fas fa-envelope"></i> Contact Us
+            </a>
           </div>
 
           <!-- SUCCESS STATE -->
@@ -904,10 +1293,9 @@
               Thank you! Your registration has been received. Our team will
               contact you soon.
             </p>
-            <a href="../index.html" class="back-btn"
-              ><i class="fas fa-home" style="margin-right: 8px"></i>Back to
-              Home</a
-            >
+            <a href="../index.html" class="back-btn">
+              <i class="fas fa-home"></i> Back to Home
+            </a>
           </div>
         </div>
       </div>
@@ -916,20 +1304,23 @@
     <!-- FOOTER -->
     <footer class="site-footer">
       <div class="wrap footer-inner">
-        <img
-          src="../images/logos/CompactInv.png"
-          alt="Aristo Logo"
-          class="footer-logo"
-          loading="lazy"
-        />
-        <p>Copyright © 2025 All Rights Reserved Aristo Tech</p>
+        <picture>
+          <img
+            src="../images/logos/CompactInv.png"
+            alt="Aristo Logo"
+            class="footer-logo"
+            loading="lazy"
+            onerror="showDefaultCompactLogo(this)"
+          />
+        </picture>
+        <p>Copyright © 2026 All Rights Reserved Aristo Tech</p>
         <div class="social">
           <a
             href="https://www.facebook.com/Aristo.Academy1/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
-            ><i class="fab fa-facebook"></i
+            ><i class="fab fa-facebook-f"></i
           ></a>
           <a
             href="https://www.instagram.com/aristoeg_?igsh=dzlnbTJqM3dscGho"
@@ -943,14 +1334,19 @@
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            ><i class="fab fa-linkedin"></i
+            ><i class="fab fa-linkedin-in"></i
           ></a>
         </div>
       </div>
     </footer>
 
     <!-- ADMIN FAB -->
-    <a href="./dashboard.html" class="admin-fab" title="Admin Panel">
+    <a
+      href="./dashboard.html"
+      class="admin-fab"
+      id="adminPill"
+      title="Admin Panel"
+    >
       <i class="fas fa-shield-alt"></i> Admin
     </a>
 
@@ -986,10 +1382,17 @@
           document.getElementById("spotsLeft").textContent = left;
           document.getElementById("counterBar").style.width = pct + "%";
           const bar = document.getElementById("counterBar");
-          if (pct >= 90)
-            bar.style.background = "linear-gradient(90deg,#e53935,#ff6b6b)";
-          else if (pct >= 60)
-            bar.style.background = "linear-gradient(90deg,#f59e0b,#ff7f00)";
+          if (pct >= 90) {
+            bar.style.background = "linear-gradient(90deg,#f43f5e,#ec4899)";
+            document.getElementById("spotsLeft").style.color = "#f43f5e";
+          } else if (pct >= 60) {
+            bar.style.background = "linear-gradient(90deg,#f59e0b,#d97706)";
+            document.getElementById("spotsLeft").style.color = "#f59e0b";
+          } else {
+            bar.style.background = "linear-gradient(90deg,#6c2cf5,#0099ff)";
+            document.getElementById("spotsLeft").style.color =
+              "var(--primary-blue)";
+          }
           if (count >= MAX) showCapacityFull();
           return count;
         } catch (e) {
@@ -1008,13 +1411,15 @@
           .querySelectorAll(".field-error")
           .forEach((e) => e.classList.remove("show"));
         document
-          .querySelectorAll("input")
+          .querySelectorAll("input, select")
           .forEach((e) => e.classList.remove("error"));
       }
+
       function showError(errId, inputId) {
         document.getElementById(errId).classList.add("show");
         document.getElementById(inputId).classList.add("error");
       }
+
       function validate() {
         clearErrors();
         let ok = true;
@@ -1023,6 +1428,7 @@
         const email = document.getElementById("email").value.trim();
         const nationalId = document.getElementById("nationalId").value.trim();
         const title = document.getElementById("title").value.trim();
+
         if (!name) {
           showError("err-name", "name");
           ok = false;
@@ -1086,34 +1492,100 @@
             }
             btn.disabled = false;
             btn.innerHTML =
-              '<i class="fas fa-paper-plane"></i> Submit Registration';
+              '<span>Submit Registration</span> <i class="fas fa-arrow-right"></i>';
           }
         } catch (e) {
           console.error("Submit error:", e);
           alert("Network error. Please check your connection and try again.");
           btn.disabled = false;
           btn.innerHTML =
-            '<i class="fas fa-paper-plane"></i> Submit Registration';
+            '<span>Submit Registration</span> <i class="fas fa-arrow-right"></i>';
         }
       }
 
-      // Mobile menu
-      const openBtn = document.querySelector(".mobile-toggle");
-      const panel = document.querySelector(".mobile-panel");
-      const closeBtn = document.querySelector(".mobile-close");
-      document.querySelectorAll(".mobile-link").forEach((l) =>
-        l.addEventListener("click", () => {
-          panel.classList.remove("open");
+      // Mobile Menu Actions
+      function toggleMobileMenu() {
+        const panel = document.getElementById("mobileMenu");
+        panel.classList.toggle("open");
+        if (panel.classList.contains("open")) {
+          document.body.style.overflow = "hidden";
+        } else {
           document.body.style.overflow = "";
-        }),
-      );
-      openBtn.addEventListener("click", () => {
-        panel.classList.add("open");
-        document.body.style.overflow = "hidden";
-      });
-      closeBtn.addEventListener("click", () => {
-        panel.classList.remove("open");
-        document.body.style.overflow = "";
+        }
+      }
+
+      // Default logo renders if HorizontalInv.png does not load
+      function showDefaultLogo(imgElement) {
+        imgElement.style.display = "none";
+        const container = imgElement.parentElement;
+        container.innerHTML = `<div class="logo-text-fallback">ARISTO<span>EDTECH</span></div>`;
+      }
+
+      // Default Compact logo renders if CompactInv.png does not load
+      function showDefaultCompactLogo(imgElement) {
+        imgElement.style.display = "none";
+        const container = imgElement.parentElement;
+        container.innerHTML = `<span style="color:white; font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:1.15rem; letter-spacing:1px">ARISTO</span>`;
+      }
+
+      // Sponsor fallback renders text/logo box matching branding style of image
+      function handleSponsorError(imgElement, partnerText) {
+        imgElement.style.display = "none";
+        const container = imgElement.parentElement;
+        container.classList.add("empty");
+
+        let iconClass = "fa-image";
+        if (
+          partnerText.includes("Academy") ||
+          partnerText.includes("Education")
+        )
+          iconClass = "fa-graduation-cap";
+        if (partnerText.includes("Youth")) iconClass = "fa-star";
+        if (partnerText.includes("University")) iconClass = "fa-university";
+
+        container.innerHTML = `<i class="fas ${iconClass}"></i><span>${partnerText}</span>`;
+      }
+
+      // Glowing High Fidelity Canvas Draw Fallback for STEM pathways
+      function triggerCertificateFallback(imgElement) {
+        const container = document.getElementById("certImageContainer");
+        container.innerHTML = `
+          <div class="cert-placeholder">
+            <div class="cert-placeholder-left">
+              <i class="fas fa-microchip tech-mesh-icon"></i>
+            </div>
+            <div class="cert-placeholder-right">
+              <div class="glowing-ring-container">
+                <svg class="glowing-ring-svg" viewBox="0 0 170 170">
+                  <defs>
+                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#00f0ff" />
+                      <stop offset="50%" stop-color="#3e5be2" />
+                      <stop offset="100%" stop-color="#7000ff" />
+                    </linearGradient>
+                  </defs>
+                  <circle class="ring-bg" cx="85" cy="85" r="80" />
+                  <circle class="ring-flow" cx="85" cy="85" r="80" />
+                </svg>
+                <div class="steam-title">STEAM</div>
+                <div class="steam-pathways-sub">Pathways</div>
+                <div class="vate-brand">
+                  <span class="alpha-symbol">&#945;</span>
+                  <span class="vate-text">Vate</span>
+                </div>
+                <div class="brand-year">2026</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Close mobile menu on clicking any link
+      document.querySelectorAll(".mobile-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          document.getElementById("mobileMenu").classList.remove("open");
+          document.body.style.overflow = "";
+        });
       });
 
       updateCounter();
